@@ -10,8 +10,9 @@ enum PutterViewType{
 
 
 class PutterSection extends StatefulWidget {
-  const PutterSection({super.key});
-
+  const PutterSection({super.key,required this.topAngle,required this.sideAngle});
+  final double topAngle;
+  final double sideAngle;
   @override
   State<PutterSection> createState() => _PutterSectionState();
 }
@@ -36,9 +37,9 @@ class _PutterSectionState extends State<PutterSection> {
           SizedBox(height: 20.w,),
           Row(
             children: [
-              Expanded(child: PutterPanelTop()),
+              Expanded(child: PutterPanelTop(topAngle:widget.topAngle)),
               SizedBox(width: 12.w,),
-              Expanded(child: PutterPanelSide()),
+              Expanded(child: PutterPanelSide(sideAngle:widget.sideAngle)),
             ],
           ),
           SizedBox(height:30.w),
@@ -51,14 +52,14 @@ class _PutterSectionState extends State<PutterSection> {
 
 
 class PutterPanelTop extends StatefulWidget {
-  const PutterPanelTop({super.key});
-
+  const PutterPanelTop({super.key,required this.topAngle});
+  final double topAngle;
   @override
   State<PutterPanelTop> createState() => _PutterPanelTopState();
 }
 class PutterPanelSide extends StatefulWidget {
-  const PutterPanelSide({super.key});
-
+  const PutterPanelSide({super.key,required this.sideAngle});
+  final double sideAngle;
   @override
   State<PutterPanelSide> createState() => _PutterPanelSideState();
 }
@@ -93,7 +94,7 @@ class _PutterPanelSideState extends State<PutterPanelSide> {
           SizedBox(height: 4.w,),
           Align(
             alignment: Alignment.centerRight,
-            child: Text("20°",
+            child: Text("${widget.sideAngle.toStringAsFixed(1)}°",
               style: TextStyle(
                 fontSize: 24.sp,
                 color: const Color(0xff000000),
@@ -134,7 +135,7 @@ class _PutterPanelSideState extends State<PutterPanelSide> {
                   child: Transform.rotate(
                     origin: Offset(20.w, 0),
                     alignment: Alignment.bottomLeft,
-                      angle: 40 * -1 * pi / 180,
+                      angle: widget.sideAngle * -1 * pi / 180,
                       child: Image.asset('assets/image/putter_side.png',width: 100.w,))),
               Positioned(
                 bottom: 31.w,
@@ -143,7 +144,7 @@ class _PutterPanelSideState extends State<PutterPanelSide> {
                 child: SizedBox(
                   child: ArcPainterWidget(
                     viewType: PutterViewType.SIDE,
-                    angle: 40,// 호(각도 단위)
+                    angle: widget.sideAngle,// 호(각도 단위)
                     radius:20, // 호의 반지름
                     strokeWidth: 2, // 호의 두께
 
@@ -188,7 +189,7 @@ class _PutterPanelTopState extends State<PutterPanelTop> {
           SizedBox(height: 4.w,),
           Align(
             alignment: Alignment.centerRight,
-            child: Text("L 12°",
+            child: Text("${widget.topAngle.toStringAsFixed(1)}°",
               style: TextStyle(
                 fontSize: 24.sp,
                 color: const Color(0xff000000),
@@ -217,7 +218,7 @@ class _PutterPanelTopState extends State<PutterPanelTop> {
                   left: 0,
                   right: 0,
                   child: Transform.rotate(
-                      angle: 40 * pi / 180,
+                      angle: widget.topAngle * pi / 180,
                       child: Image.asset('assets/image/putter_top.png',width: 100.w,))),
               Positioned(
                 bottom: 31.w,
@@ -225,7 +226,7 @@ class _PutterPanelTopState extends State<PutterPanelTop> {
                 right: 40.w,
                   child: SizedBox(
                     child: ArcPainterWidget(
-                        angle: 40,// 호의 길이 (각도 단위)
+                        angle: widget.topAngle,// 호의 길이 (각도 단위)
                       radius:20, // 호의 반지름
                       strokeWidth: 2, // 호의 두께
                     ),

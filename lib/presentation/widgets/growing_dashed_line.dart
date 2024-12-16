@@ -98,15 +98,8 @@ class SmoothDashedLineWithArrowPainter extends CustomPainter {
     for (int i = 0; i < points.length - 1; i++) {
       final midPointX = (points[i].x + points[i + 1].x) / 2;
       final midPointY = (points[i].y + points[i + 1].y) / 2;
-      // path.quadraticBezierTo(
-      //   points[i].x,
-      //   points[i].y,
-      //   midPointX,
-      //   midPointY,
-      // );
-      path.cubicTo(
-        points[i].x,
-        points[i].y,
+
+      path.quadraticBezierTo(
         midPointX,
         midPointY,
         points[i + 1].x,
@@ -122,12 +115,19 @@ class SmoothDashedLineWithArrowPainter extends CustomPainter {
     if(isShowArrow){
     // Draw Arrow at the End
     if (points.isNotEmpty) {
-      final metric = path.computeMetrics().last;
-      final tangent = metric.getTangentForOffset(metric.length * animationValue);
-      if (tangent != null) {
+      if (path
+          .computeMetrics()
+          .isNotEmpty) {
+        final metric = path
+            .computeMetrics()
+            .last;
+        final tangent = metric.getTangentForOffset(
+            metric.length * animationValue);
+        if (tangent != null) {
           _drawArrow(canvas, paint, tangent.position, tangent.vector);
         }
       }
+    }
     }
   }
 

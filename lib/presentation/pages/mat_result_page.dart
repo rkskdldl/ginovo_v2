@@ -348,14 +348,14 @@ class _MatResultPageState extends State<MatResultPage> {
                                       SizedBox(
                                         width:240.w,
                                         height:240.w,
-                                        child: Container(child: Web3dViewer()),
+                                        child: Container(child: Web3dViewer(spinAngle:20)),
                                       ),
                                     ],
                                   ),
                                 ),
                               ),
 
-                              PutterSection(),
+                              PutterSection(topAngle:20,sideAngle:15),
                             ],
                           ),
                         )

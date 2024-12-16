@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Three.js GLB Loader</title>
     <style>
         body { margin: 0; overflow: hidden; }
@@ -30,7 +30,9 @@
 
     window.renderer = new THREE.WebGLRenderer({ alpha: true });
     renderer.setClearColor( 0x000000, 0 );
-    renderer.setSize(window.innerWidth, window.innerHeight);
+    const dpr = window.devicePixelRatio || 1; // Get device pixel ratio
+    renderer.setSize(window.innerWidth , window.innerHeight); // Set canvas size
+    renderer.setPixelRatio(dpr);
     document.body.appendChild(renderer.domElement);
 
     // OrbitControls 설정

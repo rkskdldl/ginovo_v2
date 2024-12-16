@@ -66,31 +66,6 @@ class _LongPutResultPageState extends State<LongPutResultPage> {
                     Expanded(
                       child: Row(
                         children: [
-                          Text("Path"),
-                          Expanded(
-                              child:
-                              Align(
-                                  alignment: Alignment.centerRight,
-                                  child: Text("b -> B",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 16.sp,
-                                    ),
-                                  ))
-                          ),
-                          SizedBox(width: 25.w,),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      width: 1.w,
-                      height: 31.w,
-                      color: Colors.grey,
-                    ),
-                    SizedBox(width: 20.w,),
-                    Expanded(
-                      child: Row(
-                        children: [
                           Text("그린 스피드"),
                           Expanded(
                               child: Align(
@@ -228,7 +203,7 @@ class _LongPutResultPageState extends State<LongPutResultPage> {
                                           SizedBox(
                                             width:240.w,
                                             height:240.w,
-                                            child: Container(child: Web3dViewer()),
+                                            child: Container(child: Web3dViewer(spinAngle:20)),
                                           ),
                                           Positioned(
                                               left: 0,
@@ -263,7 +238,7 @@ class _LongPutResultPageState extends State<LongPutResultPage> {
                                 ),
                               ),
 
-                              PutterSection(),
+                              PutterSection( topAngle:20,sideAngle:15),
                             ],
                           ),
                         )

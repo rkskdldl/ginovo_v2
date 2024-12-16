@@ -4,8 +4,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 class Web3dViewer extends StatefulWidget {
-  const Web3dViewer({super.key});
-
+  const Web3dViewer({super.key,required this.spinAngle});
+  final double spinAngle;
   @override
   State<Web3dViewer> createState() => _Web3dViewerState();
 }
@@ -39,6 +39,7 @@ class _Web3dViewerState extends State<Web3dViewer> {
           initialSettings: InAppWebViewSettings(
             allowFileAccessFromFileURLs: true,
             allowUniversalAccessFromFileURLs: true,
+            hardwareAcceleration: true,
           ),
           onWebViewCreated: (controller) {
             webViewController = controller;
@@ -69,7 +70,7 @@ class _Web3dViewerState extends State<Web3dViewer> {
     // 카메라 위치 설정
     camera.position.z = 2;
         console.log('모델 로드 성공:', gltf);
-         model.rotation.z = ${20 * pi /180};
+         model.rotation.z = ${widget.spinAngle * pi /180};
         
         
             // 애니메이션 루프
