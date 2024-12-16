@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ginovo_result/presentation/pages/long_put_result_page.dart';
 import 'package:ginovo_result/presentation/pages/mat_result_page.dart';
 import 'helper/constants.dart';
 
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       navigatorKey:navigatorKey,
       title: 'ginovo result',
-      onGenerateRoute: (routes)=>MaterialPageRoute(builder: (_)=>MatResultPage()),
+      onGenerateRoute: (routes)=>MaterialPageRoute(builder: (_)=>LongPutResultPage()),
         builder:(ctx,widget) {
           ScreenUtil.init(ctx,
               designSize: Size(AppSize.standardWidth, AppSize.standardHeight));

@@ -9,13 +9,16 @@ class SmoothGrowingDashedLine extends StatefulWidget {
   final double dashLength;
   final double gapLength;
   final Duration duration;
-
+  final Color color;
+  final bool isShowArrow;
   const SmoothGrowingDashedLine({
     Key? key,
     required this.points,
     this.dashLength = 5.0,
     this.gapLength = 3.0,
     this.duration = const Duration(seconds: 4),
+    required this.color,
+    this.isShowArrow = true,
   }) : super(key: key);
 
   @override
@@ -54,6 +57,8 @@ class _SmoothGrowingDashedLineState extends State<SmoothGrowingDashedLine>
             dashLength: widget.dashLength,
             gapLength: widget.gapLength,
             animationValue: _controller.value,
+            color: widget.color,
+            isShowArrow: widget.isShowArrow,
           ),
         );
       },
@@ -66,12 +71,15 @@ class SmoothDashedLineWithArrowPainter extends CustomPainter {
   final double dashLength;
   final double gapLength;
   final double animationValue;
-
+  final Color color;
+  final bool isShowArrow;
   SmoothDashedLineWithArrowPainter({
     required this.points,
     required this.dashLength,
     required this.gapLength,
     required this.animationValue,
+    required this.color,
+    required this.isShowArrow,
   });
 
   @override
@@ -79,7 +87,7 @@ class SmoothDashedLineWithArrowPainter extends CustomPainter {
     if (points.length < 2) return;
 
     final paint = Paint()
-      ..color = const Color(0xff0E0276)
+      ..color = color
       ..strokeWidth = 3.0
       ..style = PaintingStyle.stroke;
 
@@ -111,12 +119,14 @@ class SmoothDashedLineWithArrowPainter extends CustomPainter {
     final dashedPath = _createDashedPath(path, animationValue);
     canvas.drawPath(dashedPath, paint);
 
+    if(isShowArrow){
     // Draw Arrow at the End
     if (points.isNotEmpty) {
       final metric = path.computeMetrics().last;
       final tangent = metric.getTangentForOffset(metric.length * animationValue);
       if (tangent != null) {
-        _drawArrow(canvas, paint, tangent.position, tangent.vector);
+          _drawArrow(canvas, paint, tangent.position, tangent.vector);
+        }
       }
     }
   }

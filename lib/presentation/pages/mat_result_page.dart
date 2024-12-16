@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ginovo_result/presentation/widgets/putter_panel.dart';
 import 'package:ginovo_result/presentation/widgets/web_3d_viewer.dart';
 
 import 'package:vector_math/vector_math_64.dart' as vec;
@@ -23,6 +24,11 @@ class _MatResultPageState extends State<MatResultPage> {
     vec.Vector2(0, 0),
     vec.Vector2(0,300),
   ];
+
+  List<vec.Vector2> skidPoints = [
+    vec.Vector2(0, 0),
+    vec.Vector2(0,40),
+  ];
   StartPoint startPoint = StartPoint.b;
   EndPoint endPoint = EndPoint.B;
   //중간 포인트
@@ -32,6 +38,7 @@ class _MatResultPageState extends State<MatResultPage> {
     WidgetsBinding.instance.addPostFrameCallback((e){
       setState(() {
         points =  MatCalculator.instance.translatePoints(sp: startPoint, points: points);
+        skidPoints =  MatCalculator.instance.translatePoints(sp: startPoint, points: skidPoints);
         isTransPoints = true;
       });
     });
@@ -156,7 +163,17 @@ class _MatResultPageState extends State<MatResultPage> {
                                         child : SizedBox(
                                             width: 132.w,
                                             height: MatCalculator.convertHeight.w,
-                                            child: true?Container():SmoothGrowingDashedLine(points: points)),
+                                            child: SmoothGrowingDashedLine(points: points,color: Colors.green,)),
+                                      ):Container(),
+                                      isTransPoints?Positioned(
+                                        left: 0,
+                                        top: 0,
+                                        right: 0,
+                                        bottom: 0,
+                                        child : SizedBox(
+                                            width: 132.w,
+                                            height: MatCalculator.convertHeight.w,
+                                            child: SmoothGrowingDashedLine(points: skidPoints,color: Colors.red,isShowArrow: false,duration: Duration(seconds: 2),)),
                                       ):Container(),
                                     ],
                                   ),
@@ -204,6 +221,52 @@ class _MatResultPageState extends State<MatResultPage> {
                                                     ),
                                                   ),
                                                   Text("3.1m",
+                                                    style: TextStyle(
+                                                        fontSize: 24.sp,
+                                                        color: Color(0xff000000),
+                                                        fontWeight: FontWeight.w500
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            Positioned(
+                                              bottom: 40.w,
+                                              left: 0,
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  Text("스키드 거리",
+                                                    style: TextStyle(
+                                                      fontSize: 14.sp,
+                                                      color: Color(0xff7A7A7A),
+                                                    ),
+                                                  ),
+                                                  Text("0.2m",
+                                                    style: TextStyle(
+                                                        fontSize: 24.sp,
+                                                        color: Color(0xff000000),
+                                                        fontWeight: FontWeight.w500
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            Positioned(
+                                              bottom: 0,
+                                              left: 0,
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  Text("이격각",
+                                                    style: TextStyle(
+                                                      fontSize: 14.sp,
+                                                      color: Color(0xff7A7A7A),
+                                                    ),
+                                                  ),
+                                                  Text("3.0°",
                                                     style: TextStyle(
                                                         fontSize: 24.sp,
                                                         color: Color(0xff000000),
@@ -291,7 +354,8 @@ class _MatResultPageState extends State<MatResultPage> {
                                   ),
                                 ),
                               ),
-                              SizedBox(height:20.w),
+
+                              PutterSection(),
                             ],
                           ),
                         )
