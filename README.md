@@ -42,7 +42,7 @@ A new Flutter project.
 ```
 
 
-## 라이브러리
+## 추가 라이브러리
 
 
 ```yaml
