@@ -3,11 +3,11 @@
 A new Flutter project.
 
 ## 폴더 구조
-
+```bash
 .
 ├── assets/
 │   ├── image/
-│   │   ├── ball_img.png   [골프공 이미지]  
+│   │   ├── ball_img.png   [골프공 이미지] 
 │   │   ├── ball_img_with_padding.png   [패팅 있는 골프공 이미지]
 │   │   ├── long_put_rail.png   [골프 깃대 이미지]
 │   │   ├── mat_90_grey.png   [회색 90cm 골프 매트  1084 x 4096]
@@ -40,4 +40,4 @@ A new Flutter project.
     │       └── web_3d_viewer.dart   [3d 회전 시뮬레이션 html을 inAppWebView로 보여주는 위젯]
     └── main.dart   [앱 시작 파일]
 
-
+```
