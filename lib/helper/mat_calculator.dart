@@ -37,6 +37,11 @@ class MatCalculator implements MatCalculatorInterface{
   static Vector2 aPosSmall = Vector2(178 * widthBias, 3855*heightBias);
   static Vector2 bPosSmall = Vector2(542 * widthBias,3855*heightBias);
   static Vector2 cPosSmall = Vector2(903 * widthBias,3855*heightBias);
+
+  static Vector2 lPosMiddle = Vector2(238 * widthBias, 2062*heightBias);
+  static Vector2 mPosMiddle = Vector2(542 * widthBias,2062*heightBias);
+  static Vector2 rPosMiddle = Vector2(846 * widthBias,2062*heightBias);
+
   static Vector2 aPosBig = Vector2(178 * widthBias, 269*heightBias);
   static Vector2 bPosBig = Vector2(542 * widthBias,269*heightBias);
   static Vector2 cPosBig = Vector2(903 * widthBias,269*heightBias);
@@ -56,6 +61,24 @@ class MatCalculator implements MatCalculatorInterface{
       case StartPoint.c:
         startVector = cPosSmall;
         break;
+      case StartPoint.A:
+        startVector = aPosBig;
+        break;
+      case StartPoint.B:
+        startVector = bPosBig;
+        break;
+      case StartPoint.C:
+        startVector = cPosBig;
+        break;
+      case StartPoint.L:
+        startVector = lPosMiddle;
+        break;
+      case StartPoint.M:
+        startVector = mPosMiddle;
+        break;
+      case StartPoint.R:
+        startVector = rPosMiddle;
+        break;
     }
 
     Vector2 transVector = Vector2((startVector.x+(movedData.x * cmWBias)),(startVector.y-(movedData.y * cmHBias)));
@@ -74,6 +97,15 @@ class MatCalculator implements MatCalculatorInterface{
   Vector2 getEndPoint({required EndPoint ep}) {
     Vector2 endVector = Vector2(0,0);
     switch(ep){
+      case EndPoint.a:
+        endVector = aPosSmall;
+        break;
+      case EndPoint.b:
+        endVector = bPosSmall;
+        break;
+      case EndPoint.c:
+        endVector = cPosSmall;
+        break;
       case EndPoint.A:
         endVector = aPosBig;
         break;
@@ -82,6 +114,15 @@ class MatCalculator implements MatCalculatorInterface{
         break;
       case EndPoint.C:
         endVector = cPosBig;
+        break;
+      case EndPoint.L:
+        endVector = lPosMiddle;
+        break;
+      case EndPoint.M:
+        endVector = mPosMiddle;
+        break;
+      case EndPoint.R:
+        endVector = rPosMiddle;
         break;
     }
 
@@ -101,29 +142,47 @@ class MatCalculator implements MatCalculatorInterface{
       case StartPoint.c:
         startVector = cPosSmall;
         break;
+      case StartPoint.A:
+        startVector = aPosBig;
+        break;
+      case StartPoint.B:
+        startVector = bPosBig;
+        break;
+      case StartPoint.C:
+        startVector = cPosBig;
+        break;
+      case StartPoint.L:
+        startVector = lPosMiddle;
+        break;
+      case StartPoint.M:
+        startVector = mPosMiddle;
+        break;
+      case StartPoint.R:
+        startVector = rPosMiddle;
+        break;
     }
     return Vector2(startVector.x.w,startVector.y.w);
   }
   /// 시작점과 끝점을 기반으로 여러 포인트를 계산하여 곡선을 만드는 함수
-  List<Offset> generateCurvePoints({
-    required Offset startPoint,
-    required Offset endPoint,
+  List<Vector2> generateCurvePoints({
+    required Vector2 startPoint,
+    required Vector2 endPoint,
     required bool isRight, // true: 오른쪽으로 휘게, false: 왼쪽으로 휘게
     double curvature = 0.3, // 곡률 정도 (0.0 ~ 1.0)
     int pointCount = 100, // 생성할 포인트 개수
   }) {
-    final points = <Offset>[];
+    final points = <Vector2>[];
 
     // 두 점의 중간점 계산
     final midPoint = Offset(
-      (startPoint.dx + endPoint.dx) / 2,
-      (startPoint.dy + endPoint.dy) / 2,
+      (startPoint.x + endPoint.x) / 2,
+      (startPoint.y + endPoint.y) / 2,
     );
 
     // 두 점의 기울기 벡터 계산
     final vector = Offset(
-      endPoint.dy - startPoint.dy,
-      -(endPoint.dx - startPoint.dx),
+      endPoint.y - startPoint.y,
+      -(endPoint.x - startPoint.x),
     );
 
     // 벡터를 정규화하여 방향만 유지
@@ -149,15 +208,15 @@ class MatCalculator implements MatCalculatorInterface{
       final t = i / pointCount; // 비율 (0.0 ~ 1.0)
 
       // Bezier 공식: (1-t)^2 * P0 + 2(1-t)t * P1 + t^2 * P2
-      final x = (1 - t) * (1 - t) * startPoint.dx +
+      final x = (1 - t) * (1 - t) * startPoint.x +
           2 * (1 - t) * t * controlPoint.dx +
-          t * t * endPoint.dx;
+          t * t * endPoint.x;
 
-      final y = (1 - t) * (1 - t) * startPoint.dy +
+      final y = (1 - t) * (1 - t) * startPoint.y +
           2 * (1 - t) * t * controlPoint.dy +
-          t * t * endPoint.dy;
+          t * t * endPoint.y;
 
-      points.add(Offset(x, y));
+      points.add(Vector2(x, y));
     }
 
     return points;
@@ -169,11 +228,23 @@ class MatCalculator implements MatCalculatorInterface{
 enum StartPoint{
   a,
   b,
-  c
+  c,
+  A,
+  B,
+  C,
+  L,
+  M,
+  R
 }
 
 enum EndPoint{
+  a,
+  b,
+  c,
   A,
   B,
-  C
+  C,
+  L,
+  M,
+  R
 }

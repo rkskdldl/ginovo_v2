@@ -189,7 +189,7 @@ class _PutterPanelTopState extends State<PutterPanelTop> {
           SizedBox(height: 4.w,),
           Align(
             alignment: Alignment.centerRight,
-            child: Text("${widget.topAngle.toStringAsFixed(1)}°",
+            child: Text("${widget.topAngle>0?"R":widget.topAngle<0?"L":""} ${widget.topAngle.toStringAsFixed(1)}°",
               style: TextStyle(
                 fontSize: 24.sp,
                 color: const Color(0xff000000),
@@ -399,6 +399,105 @@ class ArcPainter extends CustomPainter {
       false, // 호 내부 채우기 여부 (false = 채우지 않음)
       paint, // 페인트 스타일
     );
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+}
+
+class DashedArcWidget extends StatefulWidget {
+  const DashedArcWidget({
+    super.key,
+    required this.size,
+    required this.dashLength,
+    required this.gapLength,
+    required this.strokeWidth,
+    required this.color,
+    required this.startAngle,
+    required this.sweepAngle,
+  });
+  final Size size;
+  final double dashLength; // 점선 길이
+  final double gapLength; // 점선 간격
+  final double strokeWidth; // 선 두께
+  final Color color; // 선 색상
+  final double startAngle; // 시작 각도 (라디안)
+  final double sweepAngle; // 호의 전체 각도 (라디안)
+  @override
+  State<DashedArcWidget> createState() => _DashedArcWidgetState();
+}
+
+class _DashedArcWidgetState extends State<DashedArcWidget> {
+  @override
+  Widget build(BuildContext context) {
+    return CustomPaint(
+      size: widget.size, // 캔버스 크기
+      painter: DashedArcPainter(
+        dashLength: widget.dashLength, // 점선의 길이
+        gapLength: widget.gapLength, // 점선 간격
+        strokeWidth: widget.strokeWidth, // 선의 두께
+        color: widget.color, // 선 색상
+        startAngle: widget.startAngle, // 시작 각도 (라디안)
+        sweepAngle: widget.sweepAngle, // 호의 각도 (90도 = pi/2 라디안)
+      ),
+    );
+  }
+}
+
+
+class DashedArcPainter extends CustomPainter {
+  final double dashLength; // 점선 길이
+  final double gapLength; // 점선 간격
+  final double strokeWidth; // 선 두께
+  final Color color; // 선 색상
+  final double startAngle; // 시작 각도 (라디안)
+  final double sweepAngle; // 호의 전체 각도 (라디안)
+
+  DashedArcPainter({
+    required this.dashLength,
+    required this.gapLength,
+    required this.strokeWidth,
+    required this.color,
+    required this.startAngle,
+    required this.sweepAngle,
+  });
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = color
+      ..strokeWidth = strokeWidth
+      ..style = PaintingStyle.stroke;
+
+    final center = Offset(size.width / 2, size.height / 2); // 중심점
+    final radius = min(size.width, size.height) / 2 - strokeWidth; // 반지름
+
+    // 점선 그리기
+    double currentAngle = startAngle; // 현재 그릴 각도
+    final totalCircumference = sweepAngle * radius; // 호의 총 길이
+    final totalDashes = totalCircumference / (dashLength + gapLength); // 총 점선 수
+
+    for (int i = 0; i < totalDashes; i++) {
+      // 시작 각도와 끝 각도 계산
+      final startDashAngle = currentAngle;
+      final endDashAngle = currentAngle + (dashLength / radius);
+
+      // 점선의 시작점과 끝점 계산
+      final startPoint = Offset(
+        center.dx + radius * cos(startDashAngle),
+        center.dy + radius * sin(startDashAngle),
+      );
+      final endPoint = Offset(
+        center.dx + radius * cos(endDashAngle),
+        center.dy + radius * sin(endDashAngle),
+      );
+
+      // 작은 점선을 그리기
+      canvas.drawLine(startPoint, endPoint, paint);
+
+      // 다음 점선의 시작 각도로 이동
+      currentAngle = endDashAngle + (gapLength / radius);
+    }
   }
 
   @override

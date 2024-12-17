@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ginovo_result/presentation/widgets/mat_panel.dart';
 import 'package:ginovo_result/presentation/widgets/putter_panel.dart';
 import 'package:ginovo_result/presentation/widgets/web_3d_viewer.dart';
 
 import 'package:vector_math/vector_math_64.dart' as vec;
 
 import '../../helper/mat_calculator.dart';
-import '../widgets/DashedLine.dart';
+import '../widgets/dashed_line.dart';
 import '../widgets/data_panel.dart';
 import '../widgets/growing_dashed_line.dart';
+import '../widgets/rotation_panel.dart';
 class MatResultPage extends StatefulWidget {
   const MatResultPage({super.key});
 
@@ -17,7 +19,7 @@ class MatResultPage extends StatefulWidget {
 }
 
 class _MatResultPageState extends State<MatResultPage> {
-
+  double spinAngle = -20;
 
   bool isTransPoints = false;
   List<vec.Vector2> points = [
@@ -29,10 +31,9 @@ class _MatResultPageState extends State<MatResultPage> {
     vec.Vector2(0, 0),
     vec.Vector2(0,40),
   ];
-  StartPoint startPoint = StartPoint.b;
-  EndPoint endPoint = EndPoint.B;
-  //중간 포인트
-  //L  M  R 키워드 알파벳 문자
+  StartPoint startPoint = StartPoint.a;
+  EndPoint endPoint = EndPoint.C;
+
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((e){
@@ -132,156 +133,7 @@ class _MatResultPageState extends State<MatResultPage> {
                               ),
                               SizedBox(height: 16.w,),
                               //#region 매트 부분
-                              Row(
-                                children: [
-                                  const Spacer(),
-                                  Stack(
-                                    children: [
-                                      SizedBox(
-                                          width: 132.w,
-                                          height: MatCalculator.convertHeight.w,
-                                          child: Image.asset("assets/image/mat_90_grey.png")
-                                      ),
-                                      Positioned(
-                                        left: 0,
-                                        top: 0,
-                                        right: 0,
-                                        bottom: 0,
-                                        child: SizedBox(
-                                          width: 132.w,
-                                          height: MatCalculator.convertHeight.w,
-                                          child: DashedLine(
-                                              startPoint:MatCalculator.instance.getStartPoint(sp:startPoint),
-                                              endPoint: MatCalculator.instance.getEndPoint(ep:endPoint)),
-                                        ),
-                                      ),
-                                      isTransPoints?Positioned(
-                                        left: 0,
-                                        top: 0,
-                                        right: 0,
-                                        bottom: 0,
-                                        child : SizedBox(
-                                            width: 132.w,
-                                            height: MatCalculator.convertHeight.w,
-                                            child: SmoothGrowingDashedLine(points: points,color: Colors.green,)),
-                                      ):Container(),
-                                      isTransPoints?Positioned(
-                                        left: 0,
-                                        top: 0,
-                                        right: 0,
-                                        bottom: 0,
-                                        child : SizedBox(
-                                            width: 132.w,
-                                            height: MatCalculator.convertHeight.w,
-                                            child: SmoothGrowingDashedLine(points: skidPoints,color: Colors.red,isShowArrow: false,duration: Duration(seconds: 2),)),
-                                      ):Container(),
-                                    ],
-                                  ),
-                                  Expanded(
-                                      child: Container(
-                                        height: MatCalculator.convertHeight.w,
-                                        padding: EdgeInsets.only(left: 16.w),
-                                        child: Stack(
-                                          children: [
-                                            Container(),
-                                            Positioned(
-                                              top:points.last.y,
-                                              left: 0,
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.min,
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: [
-                                                  Text("이격거리",
-                                                    style: TextStyle(
-                                                      fontSize: 14.sp,
-                                                      color: Color(0xff7A7A7A),
-                                                    ),
-                                                  ),
-                                                  Text("0.02m",
-                                                    style: TextStyle(
-                                                        fontSize: 24.sp,
-                                                        color: Color(0xff000000),
-                                                        fontWeight: FontWeight.w500
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            Positioned(
-                                              top:(points.first.y+points.last.y)/2,
-                                              left: 0,
-                                              child: Column(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                mainAxisSize: MainAxisSize.min,
-                                                children: [
-                                                  Text("이동거리",
-                                                    style: TextStyle(
-                                                      fontSize: 14.sp,
-                                                      color: Color(0xff7A7A7A),
-                                                    ),
-                                                  ),
-                                                  Text("3.1m",
-                                                    style: TextStyle(
-                                                        fontSize: 24.sp,
-                                                        color: Color(0xff000000),
-                                                        fontWeight: FontWeight.w500
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            Positioned(
-                                              bottom: 40.w,
-                                              left: 0,
-                                              child: Column(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                mainAxisSize: MainAxisSize.min,
-                                                children: [
-                                                  Text("스키드 거리",
-                                                    style: TextStyle(
-                                                      fontSize: 14.sp,
-                                                      color: Color(0xff7A7A7A),
-                                                    ),
-                                                  ),
-                                                  Text("0.2m",
-                                                    style: TextStyle(
-                                                        fontSize: 24.sp,
-                                                        color: Color(0xff000000),
-                                                        fontWeight: FontWeight.w500
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            Positioned(
-                                              bottom: 0,
-                                              left: 0,
-                                              child: Column(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                mainAxisSize: MainAxisSize.min,
-                                                children: [
-                                                  Text("이격각",
-                                                    style: TextStyle(
-                                                      fontSize: 14.sp,
-                                                      color: Color(0xff7A7A7A),
-                                                    ),
-                                                  ),
-                                                  Text("3.0°",
-                                                    style: TextStyle(
-                                                        fontSize: 24.sp,
-                                                        color: Color(0xff000000),
-                                                        fontWeight: FontWeight.w500
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      )
-                                  ),
-                                ],
-                              ),
+                              MatPanel(points: points, skidPoints: skidPoints, startPoint: startPoint, endPoint: endPoint, isTransPoints: isTransPoints),
                               //#endregion
                               SizedBox(height: 20.w,),
                               Row(
@@ -313,48 +165,7 @@ class _MatResultPageState extends State<MatResultPage> {
                           padding: EdgeInsets.symmetric(horizontal: 24.w),
                           child: Column(
                             children: [
-                              SizedBox(height: 40.w,),
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text("회전",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.black,
-                                    fontSize: 24.sp,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(height: 20.w,),
-                              AspectRatio(
-                                aspectRatio: 1.0,
-                                child: Container(
-                                  width: double.maxFinite,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(16), // 둥근 모서리
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey.withOpacity(0.2), // 그림자 색상 및 투명도
-                                        spreadRadius: 2, // 그림자 크기 확장
-                                        blurRadius: 4, // 그림자 흐림 정도
-                                        offset: Offset(0, 4), // 그림자 위치 (x, y)
-                                      ),
-                                    ],
-                                  ),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-                                      SizedBox(
-                                        width:240.w,
-                                        height:240.w,
-                                        child: Container(child: Web3dViewer(spinAngle:20)),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-
+                              RotationSection(spinAngle: spinAngle, spinRPM: 1200, hitPoint: const Offset(-40, 10),spinType: SpinType.top,),
                               PutterSection(topAngle:20,sideAngle:15),
                             ],
                           ),

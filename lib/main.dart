@@ -23,8 +23,7 @@ class MyApp extends StatelessWidget {
       title: 'ginovo result',
       onGenerateRoute: (routes)=>MaterialPageRoute(builder: (_)=>LongPutResultPage()),
         builder:(ctx,widget) {
-          ScreenUtil.init(ctx,
-              designSize: Size(AppSize.standardWidth, AppSize.standardHeight));
+          ScreenUtil.init(ctx, designSize: Size(AppSize.standardWidth, AppSize.standardHeight));
           return widget!;
         }
     );

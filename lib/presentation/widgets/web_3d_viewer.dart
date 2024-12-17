@@ -3,9 +3,16 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+
+enum SpinType{
+  top,
+  back,
+}
+
 class Web3dViewer extends StatefulWidget {
-  const Web3dViewer({super.key,required this.spinAngle});
+  const Web3dViewer({super.key,required this.spinAngle,required this.spinType});
   final double spinAngle;
+  final SpinType spinType;
   @override
   State<Web3dViewer> createState() => _Web3dViewerState();
 }
@@ -70,14 +77,14 @@ class _Web3dViewerState extends State<Web3dViewer> {
     // 카메라 위치 설정
     camera.position.z = 2;
         console.log('모델 로드 성공:', gltf);
-         model.rotation.z = ${widget.spinAngle * pi /180};
+         camera.rotation.z = ${(widget.spinAngle-270) * pi /180};
         
         
             // 애니메이션 루프
         function animate() {
           requestAnimationFrame(animate);
        // 모델 회전
-         model.rotation.x -= 0.01; //x축 회전
+         model.rotation.x += ${0.01*(widget.spinType==SpinType.top?-1:1)}; //x축 회전
           renderer.render(scene, camera);
         }
     animate();

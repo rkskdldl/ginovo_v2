@@ -11,6 +11,7 @@ class SmoothGrowingDashedLine extends StatefulWidget {
   final Duration duration;
   final Color color;
   final bool isShowArrow;
+  final double strokeWidth;
   const SmoothGrowingDashedLine({
     Key? key,
     required this.points,
@@ -19,6 +20,7 @@ class SmoothGrowingDashedLine extends StatefulWidget {
     this.duration = const Duration(seconds: 4),
     required this.color,
     this.isShowArrow = true,
+    this.strokeWidth = 3,
   }) : super(key: key);
 
   @override
@@ -59,6 +61,7 @@ class _SmoothGrowingDashedLineState extends State<SmoothGrowingDashedLine>
             animationValue: _controller.value,
             color: widget.color,
             isShowArrow: widget.isShowArrow,
+            strokeWidth: widget.strokeWidth,
           ),
         );
       },
@@ -73,6 +76,7 @@ class SmoothDashedLineWithArrowPainter extends CustomPainter {
   final double animationValue;
   final Color color;
   final bool isShowArrow;
+  final double strokeWidth;
   SmoothDashedLineWithArrowPainter({
     required this.points,
     required this.dashLength,
@@ -80,6 +84,7 @@ class SmoothDashedLineWithArrowPainter extends CustomPainter {
     required this.animationValue,
     required this.color,
     required this.isShowArrow,
+    required this.strokeWidth,
   });
 
   @override
@@ -88,7 +93,7 @@ class SmoothDashedLineWithArrowPainter extends CustomPainter {
 
     final paint = Paint()
       ..color = color
-      ..strokeWidth = 3.0
+      ..strokeWidth = strokeWidth
       ..style = PaintingStyle.stroke;
 
     final path = Path();
