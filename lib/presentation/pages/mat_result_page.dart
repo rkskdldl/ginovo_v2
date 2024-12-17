@@ -7,39 +7,58 @@ import 'package:ginovo_result/presentation/widgets/web_3d_viewer.dart';
 import 'package:vector_math/vector_math_64.dart' as vec;
 
 import '../../helper/mat_calculator.dart';
-import '../widgets/dashed_line.dart';
 import '../widgets/data_panel.dart';
-import '../widgets/growing_dashed_line.dart';
 import '../widgets/rotation_panel.dart';
 class MatResultPage extends StatefulWidget {
-  const MatResultPage({super.key});
-
+  const MatResultPage({
+    super.key,
+    required this.points,
+    required this.skidPoints,
+    required this.greenSpeedTxt,
+    required this.startPoint,
+    required this.endPoint,
+    required this.pathTxt,
+    required this.hittingTimeTxt,
+    required this.initialSpeedTxt,
+    required this.hittingAmountTxt,
+    required this.spinAxisAngle,
+    required this.spinRPM,
+    required this.hittingPos,
+    required this.spinType,
+    required this.putterLRAngle,
+    required this.putterTBAngle,
+  });
+  final List<vec.Vector2> points;
+  final List<vec.Vector2> skidPoints;
+  final String greenSpeedTxt;
+  final StartPoint startPoint;
+  final EndPoint endPoint;
+  final String pathTxt;
+  final String hittingTimeTxt;
+  final String initialSpeedTxt;
+  final String hittingAmountTxt;
+  final double spinAxisAngle;
+  final int spinRPM;
+  final Offset hittingPos;
+  final SpinType spinType;
+  final double putterLRAngle;
+  final double putterTBAngle;
   @override
   State<MatResultPage> createState() => _MatResultPageState();
 }
 
 class _MatResultPageState extends State<MatResultPage> {
-  double spinAngle = -20;
 
   bool isTransPoints = false;
-  List<vec.Vector2> points = [
-    vec.Vector2(0, 0),
-    vec.Vector2(0,300),
-  ];
+  List<vec.Vector2> points = [];
 
-  List<vec.Vector2> skidPoints = [
-    vec.Vector2(0, 0),
-    vec.Vector2(0,40),
-  ];
-  StartPoint startPoint = StartPoint.a;
-  EndPoint endPoint = EndPoint.C;
-
+  List<vec.Vector2> skidPoints = [];
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((e){
       setState(() {
-        points =  MatCalculator.instance.translatePoints(sp: startPoint, points: points);
-        skidPoints =  MatCalculator.instance.translatePoints(sp: startPoint, points: skidPoints);
+        points =  MatCalculator.instance.translatePoints(sp: widget.startPoint, points: widget.points);
+        skidPoints =  MatCalculator.instance.translatePoints(sp: widget.startPoint, points: widget.skidPoints);
         isTransPoints = true;
       });
     });
@@ -70,7 +89,7 @@ class _MatResultPageState extends State<MatResultPage> {
                               child:
                               Align(
                                   alignment: Alignment.centerRight,
-                                  child: Text("b -> B",
+                                  child: Text("${widget.pathTxt}",
                                     style: TextStyle(
                                       fontWeight: FontWeight.w500,
                                       fontSize: 16.sp,
@@ -94,7 +113,7 @@ class _MatResultPageState extends State<MatResultPage> {
                           Expanded(
                               child: Align(
                                   alignment: Alignment.centerRight,
-                                  child: Text("3.0",
+                                  child: Text("${widget.greenSpeedTxt}",
                                     style: TextStyle(
                                       fontWeight: FontWeight.w500,
                                       fontSize: 16.sp,
@@ -133,22 +152,22 @@ class _MatResultPageState extends State<MatResultPage> {
                               ),
                               SizedBox(height: 16.w,),
                               //#region 매트 부분
-                              MatPanel(points: points, skidPoints: skidPoints, startPoint: startPoint, endPoint: endPoint, isTransPoints: isTransPoints),
+                              MatPanel(points: points, skidPoints: skidPoints, startPoint: widget.startPoint, endPoint: widget.endPoint, isTransPoints: isTransPoints),
                               //#endregion
                               SizedBox(height: 20.w,),
                               Row(
                                 children: [
-                                  Expanded(child: DataPanel(title: "타격 시간", value: "1.2s")),
+                                  Expanded(child: DataPanel(title: "타격 시간", value: "${widget.hittingTimeTxt}")),
                                   SizedBox(width: 12.w,),
-                                  Expanded(child: DataPanel(title: "초기 속도", value: "1.7m/s"))
+                                  Expanded(child: DataPanel(title: "초기 속도", value: "${widget.initialSpeedTxt}"))
                                 ],
                               ),
                               SizedBox(height: 16.w,),
                               Row(
                                 children: [
-                                  Expanded(child: DataPanel(title: "충격량", value: "0.04N")),
+                                  Expanded(child: DataPanel(title: "충격량", value: "${widget.hittingAmountTxt}")),
                                   SizedBox(width: 12.w,),
-                                  Expanded(child: DataPanel(title: "그린 스피드", value: "3.0"))
+                                  Expanded(child: DataPanel(title: "그린 스피드", value: "${widget.greenSpeedTxt}"))
                                 ],
                               ),
                               SizedBox(height: 24.w,),
@@ -165,8 +184,8 @@ class _MatResultPageState extends State<MatResultPage> {
                           padding: EdgeInsets.symmetric(horizontal: 24.w),
                           child: Column(
                             children: [
-                              RotationSection(spinAngle: spinAngle, spinRPM: 1200, hitPoint: const Offset(-40, 10),spinType: SpinType.top,),
-                              PutterSection(topAngle:20,sideAngle:15),
+                              RotationSection(spinAngle: widget.spinAxisAngle, spinRPM: widget.spinRPM, hitPoint: widget.hittingPos,spinType: widget.spinType,),
+                              PutterSection( topAngle:widget.putterLRAngle,sideAngle:widget.putterTBAngle),
                             ],
                           ),
                         )

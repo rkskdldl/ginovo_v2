@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ginovo_result/helper/long_put_calculator.dart';
@@ -10,32 +8,50 @@ import 'package:ginovo_result/presentation/widgets/web_3d_viewer.dart';
 import 'package:vector_math/vector_math_64.dart' as vec;
 import '../widgets/data_panel.dart';
 class LongPutResultPage extends StatefulWidget {
-  const LongPutResultPage({super.key});
-
+  const LongPutResultPage({
+    super.key,
+    required this.points,
+    required this.skidPoints,
+    required this.greenSpeedTxt,
+    required this.targetDistance,
+    required this.hittingTimeTxt,
+    required this.initialSpeedTxt,
+    required this.hittingAmountTxt,
+    required this.spinAxisAngle,
+    required this.spinRPM,
+    required this.hittingPos,
+    required this.spinType,
+    required this.putterLRAngle,
+    required this.putterTBAngle,
+  });
+  final List<vec.Vector2> points;
+  final List<vec.Vector2> skidPoints;
+  final String greenSpeedTxt;
+  final double targetDistance;
+  final String hittingTimeTxt;
+  final String initialSpeedTxt;
+  final String hittingAmountTxt;
+  final double spinAxisAngle;
+  final int spinRPM;
+  final Offset hittingPos;
+  final SpinType spinType;
+  final double putterLRAngle;
+  final double putterTBAngle;
   @override
   State<LongPutResultPage> createState() => _LongPutResultPageState();
 }
 
 class _LongPutResultPageState extends State<LongPutResultPage> {
-  double spinAngle = -20;
-
   bool isTransPoints = false;
-  List<vec.Vector2> points = [
-    vec.Vector2(0, 0),
-    vec.Vector2(20,300),
-  ];
-
-  List<vec.Vector2> skidPoints = [
-    vec.Vector2(0, 0),
-    vec.Vector2(0,40),
-  ];
+  List<vec.Vector2> points = [];
+  List<vec.Vector2> skidPoints = [];
 
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((e){
       setState(() {
-        points =  LongPutCalculator.instance.translatePoints(width: 90,height: 300, points: points);
-        skidPoints =  LongPutCalculator.instance.translatePoints(width: 90,height: 300, points: skidPoints);
+        points =  LongPutCalculator.instance.translatePoints(width: 90,height: widget.targetDistance, points: widget.points);
+        skidPoints =  LongPutCalculator.instance.translatePoints(width: 90,height: widget.targetDistance, points: widget.skidPoints);
         isTransPoints = true;
       });
     });
@@ -67,7 +83,7 @@ class _LongPutResultPageState extends State<LongPutResultPage> {
                           SizedBox(width: 8.w,),
                           Align(
                               alignment: Alignment.bottomRight,
-                              child: Text("3.0",
+                              child: Text("${widget.greenSpeedTxt}",
                                 style: TextStyle(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 16.sp,
@@ -105,22 +121,22 @@ class _LongPutResultPageState extends State<LongPutResultPage> {
                               ),
                               SizedBox(height: 16.w,),
                               //#region 매트 부분
-                              LongPutPanel(points: points, skidPoints: skidPoints,targetDistance: 5.0,),
+                              LongPutPanel(points: points, skidPoints: skidPoints,targetDistance: widget.targetDistance/100,),
                               //#endregion
                               SizedBox(height: 20.w,),
                               Row(
                                 children: [
-                                  Expanded(child: DataPanel(title: "타격 시간", value: "1.2s")),
+                                  Expanded(child: DataPanel(title: "타격 시간", value: "${widget.hittingTimeTxt}")),
                                   SizedBox(width: 12.w,),
-                                  Expanded(child: DataPanel(title: "초기 속도", value: "1.7m/s"))
+                                  Expanded(child: DataPanel(title: "초기 속도", value: "${widget.initialSpeedTxt}"))
                                 ],
                               ),
                               SizedBox(height: 16.w,),
                               Row(
                                 children: [
-                                  Expanded(child: DataPanel(title: "충격량", value: "0.04N")),
+                                  Expanded(child: DataPanel(title: "충격량", value: "${widget.hittingAmountTxt}")),
                                   SizedBox(width: 12.w,),
-                                  Expanded(child: DataPanel(title: "그린 스피드", value: "3.0"))
+                                  Expanded(child: DataPanel(title: "그린 스피드", value: "${widget.greenSpeedTxt}"))
                                 ],
                               ),
                               SizedBox(height: 24.w,),
@@ -137,8 +153,8 @@ class _LongPutResultPageState extends State<LongPutResultPage> {
                           padding: EdgeInsets.symmetric(horizontal: 24.w),
                           child: Column(
                             children: [
-                              RotationSection(spinAngle: spinAngle, spinRPM: 1200, hitPoint: const Offset(-40, 10),spinType: SpinType.top,),
-                              const PutterSection( topAngle:20,sideAngle:15),
+                              RotationSection(spinAngle: widget.spinAxisAngle, spinRPM: widget.spinRPM, hitPoint: widget.hittingPos,spinType: widget.spinType,),
+                              PutterSection( topAngle:widget.putterLRAngle,sideAngle:widget.putterTBAngle),
                             ],
                           ),
                         )
