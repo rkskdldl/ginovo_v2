@@ -37,7 +37,58 @@ A new Flutter project.
     │       ├── mat_panel.dart   [매트 결과 그래픽 패널 위젯 (화면 중 상단 위치)]
     │       ├── putter_panel.dart   [퍼터 결과 그래픽 패널 위젯 (화면 중 최하단 위치)]
     │       ├── rotation_panel.dart   [퍼터 결과 그래픽 패널 위젯 (화면 중 중간 위치)]
-    │       └── web_3d_viewer.dart   [3d 회전 시뮬레이션 html을 inAppWebView로 보여주는 위젯]
+    │       └── web_3d_viewer.dart   [3d 회전 시뮬레이션 html을 InAppWebView로 보여주는 위젯]
     └── main.dart   [앱 시작 파일]
-
 ```
+
+
+## 라이브러리
+
+
+```yaml
+  flutter_screenutil: ^5.9.3   # 반응형 위젯 라이브러리
+  vector_math: ^2.1.4   # 백터 라이브러리
+  flutter_inappwebview: ^6.1.5   # 웹뷰 라이브러리
+```
+
+
+***
+
+
+## 환경설정
+
+1. 반응형 디자인을 적용하기 위해 screenUtil init 해준다.
+
+
+lib/main.dart
+```dart 
+MaterialApp(
+     ...
+        builder:(ctx,widget) {
+          ScreenUtil.init(ctx, designSize: Size(AppSize.standardWidth, AppSize.standardHeight));
+          return widget!;
+        }
+    );
+```
+
+AppSize는 lib/helper/constaints.dart 파일에
+AppSize 클래스가 정의되어 있다. (수치 변경 안해야 함. figma로 디자인한 사이즈 정의)
+
+
+
+2. assets 폴더를 pubspec.yaml 파일에 경로 참조를 해준다.
+
+pubspec.yaml
+```yaml
+  assets:
+     - assets/image/
+     - assets/web/
+```
+
+
+***
+
+
+
+
+
