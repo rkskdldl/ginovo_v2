@@ -91,4 +91,39 @@ pubspec.yaml
 
 
 
+## 페이지 파라미터
+
+### 공통항목
+
+| No. | 명칭         | 변수명              | 자료형           | 설명                                                                                                                            | 비고                                |
+|-----|------------|------------------|---------------|-------------------------------------------------------------------------------------------------------------------------------|-----------------------------------|
+| 1   | 궤적 벡터 리스트  | points           | List<Vector2> | - List를 많이 넣을수록 궤적 선 표시가 부드럽게 보임  - 시작점이 0,0 원점이 되고 시작점 기준 cm 단위로 값을 넣으면 됨 - x 값은 오른쪽은 양수, 왼쪽은 음수 / y 값은 위쪽 방향이 양수 아래쪽 방향이 음수 | [Vector2(0,0), Vector2(0,300)]    |
+| 2   | 스키드 벡터 리스트 | skidPoints       | List<Vector2> | - 스키드 부분 백터 리스트만 넣으면 됨                                                                                                        | [Vector2(0,0), Vector2(0,40)]     |
+| 3   | 그린 스피드     | greenSpeedTxt    | string        |                                                                                                                               | ex) '3.0'                         |
+| 4   | 타격시간       | hittingTimeTxt   | string        |                                                                                                                               | ex) '1.2s'                        |
+| 5   | 초기속도       | initialSpeedTxt  | string        |                                                                                                                               | ex) '1.7m/s'                      |
+| 6   | 충격량        | hittingAmountTxt | string        |                                                                                                                               | ex) '0.04N'                       |
+| 7   | 공 회전축 각도   | spinAxisAngle    | double        | 수직 축이 0도이며 왼쪽으로 기울이면 음수, 오른쪽으로 기울이면 양수                                                                                        | ex) -20.0                         |
+| 8   | 공 회전 RPM   | spinRPM          | int           |                                                                                                                               | ex) 1200                          |
+| 9   | 타점 위치      | hittingPos       | Offset        | - 공의 중앙이 (0,0) 원점  - x: -50 ~ 50 / y: -50 ~ 50  지름을 100 기준                                                                    | ex) Offset( -40, 10)              |
+| 10  | 스핀 유형      | spinType         | SpinType      | - 앞으로 구르기 (Top) , 뒤로 구르기 (Back)                                                                                               | ex) SpinType.top  , SpinType.back |
+| 11  | 퍼터 좌우각도    | putterLRAngle    | double        |                                                                                                                               | ex) 20.0                          |
+| 12  | 퍼터 상하각도    | putterTBAngle    | double        |                                                                                                                               | ex) 15.0                          |
+
+
+### 롱펏
+
+| No. | 명칭         | 변수명              | 자료형           | 설명                                                                                                                            | 비고                                |
+|-----|------------|------------------|---------------|-------------------------------------------------------------------------------------------------------------------------------|-----------------------------------|
+| 1   | 목표거리  | targetDistance           | double | - cm 단위 | ex) [Vector2(0,0), Vector2(0,300)]    |
+
+
+### 매트
+
+| No. | 명칭         | 변수명              | 자료형           | 설명                                                                                                                            | 비고                                |
+|-----|------------|------------------|---------------|-------------------------------------------------------------------------------------------------------------------------------|-----------------------------------|
+| 1   | 시작점  | startPoint           | StartPoint |  | ex) StartPoint.a, StartPoint.b, StartPoint.c, StartPoint.A, StartPoint.B, StartPoint.C, StartPoint.L, StartPoint.M, StartPoint.R  |
+| 2   | 종료점  | endPoint           | EndPoint |  | ex) EndPoint.a, EndPoint.b, EndPoint.c, EndPoint.A, EndPoint.B, EndPoint.C, EndPoint.L, EndPoint.M, EndPoint.R  |
+| 3   | 경로명  | pathTxt           | string |  | ex) 'b -> A'    |
+
 
