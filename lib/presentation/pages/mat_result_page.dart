@@ -152,7 +152,7 @@ class _MatResultPageState extends State<MatResultPage> {
                               ),
                               SizedBox(height: 16.w,),
                               //#region 매트 부분
-                              MatPanel(points: points, skidPoints: skidPoints, startPoint: widget.startPoint, endPoint: widget.endPoint, isTransPoints: isTransPoints),
+                              isTransPoints?MatPanel(points: points, skidPoints: skidPoints, startPoint: widget.startPoint, endPoint: widget.endPoint, isTransPoints: isTransPoints):Container(),
                               //#endregion
                               SizedBox(height: 20.w,),
                               Row(

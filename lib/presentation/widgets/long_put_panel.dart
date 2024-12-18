@@ -63,7 +63,7 @@ class _LongPutPanelState extends State<LongPutPanel> {
                     bottom: 0,
                     child : SizedBox(
                         width: 132.w,
-                        height:MatCalculator.convertHeight.w,
+                        height: LongPutCalculator.convertHeight.w,
                         child: AnglePainterWidget(
                             radiusFactor: 0.7,
                             size: Size(double.maxFinite, double.maxFinite),

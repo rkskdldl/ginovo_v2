@@ -121,7 +121,8 @@ class _LongPutResultPageState extends State<LongPutResultPage> {
                               ),
                               SizedBox(height: 16.w,),
                               //#region 매트 부분
-                              LongPutPanel(points: points, skidPoints: skidPoints,targetDistance: widget.targetDistance/100,),
+                              isTransPoints?
+                              LongPutPanel(points: points, skidPoints: skidPoints,targetDistance: widget.targetDistance/100,):Container(),
                               //#endregion
                               SizedBox(height: 20.w,),
                               Row(
