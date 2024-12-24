@@ -1,19 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:ginovo_result/helper/long_put_calculator.dart';
-import 'package:ginovo_result/presentation/widgets/long_put_panel.dart';
+import 'package:ginovo_result/presentation/widgets/mat_panel.dart';
 import 'package:ginovo_result/presentation/widgets/putter_panel.dart';
-import 'package:ginovo_result/presentation/widgets/rotation_panel.dart';
 import 'package:ginovo_result/presentation/widgets/web_3d_viewer.dart';
+
 import 'package:vector_math/vector_math_64.dart' as vec;
-import '../widgets/data_panel.dart';
-class LongPutResultPage extends StatefulWidget {
-  const LongPutResultPage({
+
+import '../../../helper/mat_calculator.dart';
+import '../../widgets/data_panel.dart';
+import '../../widgets/rotation_panel.dart';
+
+class MatResultPage extends StatefulWidget {
+  const MatResultPage({
     super.key,
     required this.points,
     required this.skidPoints,
     required this.greenSpeedTxt,
-    required this.targetDistance,
+    required this.startPoint,
+    required this.endPoint,
+    required this.pathTxt,
     required this.hittingTimeTxt,
     required this.initialSpeedTxt,
     required this.hittingAmountTxt,
@@ -27,7 +32,9 @@ class LongPutResultPage extends StatefulWidget {
   final List<vec.Vector2> points;
   final List<vec.Vector2> skidPoints;
   final String greenSpeedTxt;
-  final double targetDistance;
+  final StartPoint startPoint;
+  final EndPoint endPoint;
+  final String pathTxt;
   final String hittingTimeTxt;
   final String initialSpeedTxt;
   final String hittingAmountTxt;
@@ -38,20 +45,21 @@ class LongPutResultPage extends StatefulWidget {
   final double putterLRAngle;
   final double putterTBAngle;
   @override
-  State<LongPutResultPage> createState() => _LongPutResultPageState();
+  State<MatResultPage> createState() => _MatResultPageState();
 }
 
-class _LongPutResultPageState extends State<LongPutResultPage> {
+class _MatResultPageState extends State<MatResultPage> {
+
   bool isTransPoints = false;
   List<vec.Vector2> points = [];
-  List<vec.Vector2> skidPoints = [];
 
+  List<vec.Vector2> skidPoints = [];
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((e){
       setState(() {
-        points =  LongPutCalculator.instance.translatePoints(width: 90,height: widget.targetDistance, points: widget.points);
-        skidPoints =  LongPutCalculator.instance.translatePoints(width: 90,height: widget.targetDistance, points: widget.skidPoints);
+        points =  MatCalculator.instance.translatePoints(sp: widget.startPoint, points: widget.points);
+        skidPoints =  MatCalculator.instance.translatePoints(sp: widget.startPoint, points: widget.skidPoints);
         isTransPoints = true;
       });
     });
@@ -76,19 +84,43 @@ class _LongPutResultPageState extends State<LongPutResultPage> {
                     IconButton(onPressed: (){}, icon: Icon(Icons.arrow_back_ios)),
                     Expanded(
                       child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.baseline,
-                        textBaseline: TextBaseline.alphabetic,
+                        children: [
+                          Text("Path"),
+                          Expanded(
+                              child:
+                              Align(
+                                  alignment: Alignment.centerRight,
+                                  child: Text("${widget.pathTxt}",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 16.sp,
+                                    ),
+                                  ))
+                          ),
+                          SizedBox(width: 25.w,),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      width: 1.w,
+                      height: 31.w,
+                      color: Colors.grey,
+                    ),
+                    SizedBox(width: 20.w,),
+                    Expanded(
+                      child: Row(
                         children: [
                           Text("그린 스피드"),
-                          SizedBox(width: 8.w,),
-                          Align(
-                              alignment: Alignment.bottomRight,
-                              child: Text("${widget.greenSpeedTxt}",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 16.sp,
-                                ),
-                              )),
+                          Expanded(
+                              child: Align(
+                                  alignment: Alignment.centerRight,
+                                  child: Text("${widget.greenSpeedTxt}",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 16.sp,
+                                    ),
+                                  ))
+                          ),
                           SizedBox(width: 25.w,),
                         ],
                       ),
@@ -121,8 +153,7 @@ class _LongPutResultPageState extends State<LongPutResultPage> {
                               ),
                               SizedBox(height: 16.w,),
                               //#region 매트 부분
-                              isTransPoints?
-                              LongPutPanel(points: points, skidPoints: skidPoints,targetDistance: widget.targetDistance/100,):Container(),
+                              isTransPoints?MatPanel(points: points, skidPoints: skidPoints, startPoint: widget.startPoint, endPoint: widget.endPoint, isTransPoints: isTransPoints):Container(),
                               //#endregion
                               SizedBox(height: 20.w,),
                               Row(
