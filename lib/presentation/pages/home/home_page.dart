@@ -18,6 +18,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Color(0xffFBFBFB),
         body: Container(
           padding: EdgeInsets.symmetric(horizontal: 24.w),
           child: SingleChildScrollView(
@@ -257,7 +258,23 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     childWidget:Container(
-                      child:AngleGradientVisualization(angles:[30, 45, 45, -26, -26, -3, -3, -3,-3,2,2,4,35,30,-1,-1,-1,-1]),
+                      child: Column(
+                        children: [
+                          Stack(
+                            children: [
+                              AngleGradientVisualization(
+                                  width: 300.w,height: 300.w,
+                                  angles:[-90,-75,-60,-45,-30,-15,0,0,0,0,15,30,45,60,75,90]),
+                              Positioned(
+                                  left: 0,
+                                  right: 0,
+                                  bottom: 0,
+                                  child: Center(child: SemiCircleAngleWidget(width: 230.w, height: 230.w))),
+                            ],
+                          ),
+                          Image.asset('assets/image/putter_top_single.png',width: 24.w,),
+                        ],
+                      ),
                     )),
                 SizedBox(height: 30.w,),
               ],
