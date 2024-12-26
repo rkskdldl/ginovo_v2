@@ -34,21 +34,31 @@ class _HomePageState extends State<HomePage> {
                   ),),
                 ),
                 SizedBox(height: 16.w,),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: Text("연습일자 12월 25일 ",
-                    style: TextStyle(
-                      fontWeight:FontWeight.normal,
-                      fontSize: 8.sp,
-                      color: Color(0xff3A3A3A)
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text("퍼팅 분석",
+                        style: TextStyle(
+                            fontWeight:FontWeight.w500,
+                            fontSize: 24.sp,
+                            color: Color(0xff000000)
+                        ),
+                      ),
                     ),
-                  ),
+                    Text("기준일 12월 25일 ",
+                      style: TextStyle(
+                        fontWeight:FontWeight.normal,
+                        fontSize: 8.sp,
+                        color: Color(0xff3A3A3A)
+                      ),
+                    ),
+                  ],
                 ),
                 SizedBox(height: 16.w,),
                 PanelContainer(
                     titleWidget: Align(
                       alignment: Alignment.centerLeft,
-                      child: Text("타점 분포",
+                      child: Text("타점 & 스핀",
                         style: TextStyle(
                           fontSize: 20.sp,
                           color: const Color(0xff000000),
@@ -102,24 +112,15 @@ class _HomePageState extends State<HomePage> {
                     )),
                 SizedBox(height: 30.w,),
                 PanelContainer(
-                    titleWidget: Row(
-                      children: [
-                        Text("이동거리",
-                          style: TextStyle(
-                            fontSize: 20.sp,
-                            color: const Color(0xff000000),
-                            fontWeight: FontWeight.w500,
-                          ),
+                    titleWidget: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text("퍼팅 거리(m)",
+                        style: TextStyle(
+                          fontSize: 20.sp,
+                          color: const Color(0xff000000),
+                          fontWeight: FontWeight.w500,
                         ),
-                        Spacer(),
-                        Text("단위 m",
-                          style: TextStyle(
-                            fontSize: 10.sp,
-                            color: Color(0xff646464),
-
-                          ),
-                        )
-                      ],
+                      ),
                     ),
                     childWidget:Container(
                       child:Row(
@@ -128,19 +129,19 @@ class _HomePageState extends State<HomePage> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
-                              Text("목표거리",
+                              Text("타격목표",
                               style: TextStyle(
                                 fontSize:8.sp,
                                 fontWeight: FontWeight.w500,
-                                color: Color(0xffC3C3C3),
+                                color: Color(0xff474747),
                               ),
                               ),
                               SizedBox(height: 8.w,),
-                              Text("목표대비",
+                              Text("",
                                 style: TextStyle(
                                   fontSize:8.sp,
                                   fontWeight: FontWeight.w500,
-                                  color: Color(0xffC3C3C3),
+                                  color: Color(0xff474747),
                                 ),
                               ),
                             ],
@@ -190,20 +191,12 @@ class _HomePageState extends State<HomePage> {
                         SizedBox(height: 6.w,),
                         Row(
                           children: [
-                            Text("속도",
+                            Text("볼 스피드",
                               style: TextStyle(
                                 fontSize: 20.sp,
                                 color: const Color(0xff000000),
                                 fontWeight: FontWeight.w500,
                               ),
-                            ),
-                            SizedBox(width: 10.w,),
-                            Text("• 기준 속도와의 비교",
-                            style: TextStyle(
-                              fontSize: 12.sp,
-                              color: Color(0xffB3B4B8),
-
-                            ),
                             ),
                             Spacer(),
                             Text("단위 m/s",
@@ -222,21 +215,21 @@ class _HomePageState extends State<HomePage> {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Text("기준거리",
+                              Text("목표거리",
                                 style: TextStyle(
                                   fontSize:8.sp,
                                   fontWeight: FontWeight.w500,
-                                  color: Color(0xffC3C3C3),
+                                  color: Color(0xff474747),
                                 ),
                               ),
                               SizedBox(height: 8.w,),
-                              Text("기준속도",
+                              Text("기준 스피드",
                                 style: TextStyle(
                                   fontSize:8.sp,
                                   fontWeight: FontWeight.w500,
-                                  color: Color(0xffC3C3C3),
+                                  color: Color(0xff474747),
                                 ),
                               ),
                             ],
@@ -276,7 +269,7 @@ class _HomePageState extends State<HomePage> {
                 PanelContainer(
                     titleWidget: Align(
                       alignment: Alignment.centerLeft,
-                      child: Text("퍼터 페이스 각도",
+                      child: Text("페이스 각",
                         style: TextStyle(
                           fontSize: 20.sp,
                           color: const Color(0xff000000),
@@ -291,7 +284,9 @@ class _HomePageState extends State<HomePage> {
                             children: [
                               AngleGradientVisualization(
                                   width: 300.w,height: 300.w,
-                                  angles:[-90,-75,-60,-45,-30,-15,0,0,0,0,15,30,45,60,75,90]),
+                                  angles:[-90,-75,-60,-45,-30,-15,0,0,0,0,15,30,45,60,75,90,
+                                  -45,-45
+                                  ]),
                               Positioned(
                                   left: 0,
                                   right: 0,

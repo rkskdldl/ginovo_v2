@@ -21,7 +21,7 @@ class _DistanceBarWidgetState extends State<DistanceBarWidget> {
   @override
   Widget build(BuildContext context) {
     final targetColor = colorList.elementAt(widget.index%4);
-    final targetPercent = (widget.realDistance/widget.baseDistance*100);
+    final targetPercent = ((widget.realDistance/widget.baseDistance*100)-100);
     return Container(
       width: 42.w,
       child: Column(
@@ -52,11 +52,11 @@ class _DistanceBarWidgetState extends State<DistanceBarWidget> {
             ),
           ),
           SizedBox(height: 4.w,),
-          Text("${targetPercent.toStringAsFixed(0)}%",
+          Text("${targetPercent>0?"+":""}${targetPercent.toStringAsFixed(0)}%",
             style: TextStyle(
               fontWeight: FontWeight.normal,
               fontSize: 10.sp,
-              color:targetColor,
+              color:Color(0xff909090),
             ),
           ),
         ],
