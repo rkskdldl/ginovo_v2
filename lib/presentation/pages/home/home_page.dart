@@ -58,18 +58,45 @@ class _HomePageState extends State<HomePage> {
                     ),
                     childWidget:Container(
                       child:Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Expanded(
                             child: Stack(
                               alignment: Alignment.center,
                               children: [
                                 Image.asset("assets/image/hitting_point_base.png",width: 100.w,),
+                                Positioned(
+                                  left: 0,
+                                    right: 0,
+                                    top: 0,
+                                    bottom: 0,
+                                    child: OffsetVisualizer(
+                                        offsets:  [
+                                          Offset(0, 0),
+                                          Offset(0, 0),
+                                          Offset(10, 10),
+                                          Offset(20, 20),
+                                          Offset(10, 10),
+                                          Offset(30, 30),
+                                          Offset(10, 10),
+                                          Offset(20, 20),
+                                          Offset(20, 20),
+                                          Offset(20, 20),
+                                          Offset(40,0),
+                                          Offset(40,0),
+                                          Offset(40,0),
+                                          Offset(50,0),
+                                          Offset(0,50),
+                                          Offset(-50,0),
+                                        ],)
+                                ),
                               ],
                             ),
                           ),
                           Align(
-                            alignment: Alignment.centerRight,
-                              child: HeatMapIndicator()),
+                            alignment: Alignment.bottomRight,
+                              child: Container(
+                                  child: HeatMapIndicator())),
                         ],
                       ),
                     )),
