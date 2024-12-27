@@ -47,7 +47,7 @@ class _HomePageState extends State<HomePage> {
                   child: PanelContainer(
                     customPadding: EdgeInsets.symmetric(vertical: 16.w,horizontal: 20.w),
                       childWidget: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       GestureDetector(
@@ -79,7 +79,7 @@ class _HomePageState extends State<HomePage> {
                         child: Column(
                           children: [
                             Image.asset("assets/image/mat_mode.png",width: 48.w,),
-                            Text("지노버\n매트모드",
+                            Text("GINOVO\nMat Mode",
                             textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: 12.sp,
@@ -97,7 +97,7 @@ class _HomePageState extends State<HomePage> {
                         child: Column(
                           children: [
                             Image.asset("assets/image/free_mode.png",width: 48.w,),
-                            Text("자유모드",
+                            Text("Free\nMode",
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                   fontSize: 12.sp,
@@ -137,7 +137,7 @@ class _HomePageState extends State<HomePage> {
                         child: Column(
                           children: [
                             Image.asset("assets/image/longput_mode.png",width: 48.w,),
-                            Text("롱펏모드",
+                            Text("LongPutt\nMode",
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                   fontSize: 12.sp,
@@ -166,7 +166,7 @@ class _HomePageState extends State<HomePage> {
                       Row(
                         children: [
                           Expanded(
-                            child: Text("퍼팅 분석",
+                            child: Text("Putt Analysis",
                               style: TextStyle(
                                   fontWeight:FontWeight.w500,
                                   fontSize: 24.sp,
@@ -174,7 +174,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                           ),
-                          Text("기준일 12월 25일 ",
+                          Text("Base Date 12/25",
                             style: TextStyle(
                                 fontWeight:FontWeight.normal,
                                 fontSize: 8.sp,
@@ -187,7 +187,7 @@ class _HomePageState extends State<HomePage> {
                       PanelContainer(
                           titleWidget: Align(
                             alignment: Alignment.centerLeft,
-                            child: Text("타점 & 스핀",
+                            child: Text("RBI & Spin",
                               style: TextStyle(
                                 fontSize: 20.sp,
                                 color: const Color(0xff000000),
@@ -273,7 +273,7 @@ class _HomePageState extends State<HomePage> {
                       PanelContainer(
                           titleWidget: Align(
                             alignment: Alignment.centerLeft,
-                            child: Text("퍼팅 거리(m)",
+                            child: Text("putt distance(m)",
                               style: TextStyle(
                                 fontSize: 20.sp,
                                 color: const Color(0xff000000),
@@ -288,7 +288,7 @@ class _HomePageState extends State<HomePage> {
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
-                                    Text("타격목표",
+                                    Text("Hitting Target",
                                       style: TextStyle(
                                         fontSize:8.sp,
                                         fontWeight: FontWeight.w500,
@@ -350,7 +350,7 @@ class _HomePageState extends State<HomePage> {
                               SizedBox(height: 6.w,),
                               Row(
                                 children: [
-                                  Text("볼 스피드",
+                                  Text("Ball Speed",
                                     style: TextStyle(
                                       fontSize: 20.sp,
                                       color: const Color(0xff000000),
@@ -358,7 +358,7 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                   ),
                                   Spacer(),
-                                  Text("단위 m/s",
+                                  Text("Unit m/s",
                                     style: TextStyle(
                                       fontSize: 10.sp,
                                       color: Color(0xff646464),
@@ -376,7 +376,7 @@ class _HomePageState extends State<HomePage> {
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    Text("목표거리",
+                                    Text("Target Distance",
                                       style: TextStyle(
                                         fontSize:8.sp,
                                         fontWeight: FontWeight.w500,
@@ -384,7 +384,7 @@ class _HomePageState extends State<HomePage> {
                                       ),
                                     ),
                                     SizedBox(height: 8.w,),
-                                    Text("기준 스피드",
+                                    Text("Standard Speed",
                                       style: TextStyle(
                                         fontSize:8.sp,
                                         fontWeight: FontWeight.w500,
@@ -427,7 +427,7 @@ class _HomePageState extends State<HomePage> {
                       SizedBox(height: 30.w,),
                       Align(
                         alignment: Alignment.centerLeft,
-                        child: Text("페이스 각",
+                        child: Text("Face Angle",
                           style: TextStyle(
                             fontSize: 20.sp,
                             color: const Color(0xff000000),

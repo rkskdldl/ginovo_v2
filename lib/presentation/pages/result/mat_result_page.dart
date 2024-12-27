@@ -121,7 +121,7 @@ class _MatResultPageState extends State<MatResultPage> {
                     Expanded(
                       child: Row(
                         children: [
-                          Text("그린 스피드"),
+                          Text("Green Speed"),
                           Expanded(
                               child: Align(
                                   alignment: Alignment.centerRight,
@@ -155,7 +155,7 @@ class _MatResultPageState extends State<MatResultPage> {
                               Row(
                                 children: [
                                   Expanded(
-                                    child: Text("퍼팅 결과",
+                                    child: Text("Putt Results",
                                       style: TextStyle(
                                         fontWeight: FontWeight.w600,
                                         color: Colors.black,
@@ -169,7 +169,7 @@ class _MatResultPageState extends State<MatResultPage> {
                                       borderRadius: BorderRadius.circular(10.w),
                                       border: Border.all(color: Color(0xff26DD81),)
                                     ),
-                                    child: Text("매트 모드",
+                                    child: Text("Mat Mode",
                                     style: TextStyle(
                                       color: Color(0xff26DD81),
                                       fontSize: 10.sp,
@@ -196,17 +196,17 @@ class _MatResultPageState extends State<MatResultPage> {
                               SizedBox(height: 20.w,),
                               Row(
                                 children: [
-                                  Expanded(child: DataPanel(title: "임팩트 타임", value: "${widget.hittingTimeTxt}")),
+                                  Expanded(child: DataPanel(title: "Impact Time", value: "${widget.hittingTimeTxt}")),
                                   SizedBox(width: 12.w,),
-                                  Expanded(child: DataPanel(title: "볼 스피드", value: "${widget.initialSpeedTxt}"))
+                                  Expanded(child: DataPanel(title: "Ball Speed", value: "${widget.initialSpeedTxt}"))
                                 ],
                               ),
                               SizedBox(height: 16.w,),
                               Row(
                                 children: [
-                                  Expanded(child: DataPanel(title: "임팩트", value: "${widget.hittingAmountTxt}")),
+                                  Expanded(child: DataPanel(title: "Impact", value: "${widget.hittingAmountTxt}")),
                                   SizedBox(width: 12.w,),
-                                  Expanded(child: DataPanel(title: "그린 스피드", value: "${widget.greenSpeedTxt}"))
+                                  Expanded(child: DataPanel(title: "Green Speed", value: "${widget.greenSpeedTxt}"))
                                 ],
                               ),
                               SizedBox(height: 24.w,),

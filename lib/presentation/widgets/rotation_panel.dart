@@ -44,7 +44,7 @@ class _RotationSectionState extends State<RotationSection> {
           SizedBox(height: 40.w,),
           Align(
             alignment: Alignment.centerLeft,
-            child: Text("스핀",
+            child: Text("Spin",
               style: TextStyle(
                 fontWeight: FontWeight.w600,
                 color: Colors.black,

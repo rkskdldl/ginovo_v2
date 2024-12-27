@@ -97,11 +97,11 @@ class _GreenSpeedDropdownState extends State<GreenSpeedDropdown> {
       ),
       child: DropdownButton<double>(
         value: selectedValue,
-        hint: Text("롱펏 모드 - 그린스피드 ${selectedValue.toStringAsFixed(1)}"),
+        hint: Text("LongPut Mode - Green Speed ${selectedValue.toStringAsFixed(1)}"),
         items: dropdownItems.map((double item) {
           return DropdownMenuItem<double>(
             value: item,
-            child: Container(child: Text("롱펏 모드 - 그린스피드 ${item.toStringAsFixed(1)}")),
+            child: Container(child: Text("LongPut Mode - Green Speed ${item.toStringAsFixed(1)}")),
           );
         }).toList(),
         onChanged: (double? newValue) {

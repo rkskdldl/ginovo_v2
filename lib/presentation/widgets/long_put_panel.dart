@@ -34,7 +34,7 @@ class _LongPutPanelState extends State<LongPutPanel> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text("목표거리",
+        Text("Target Distance",
           style: TextStyle(
             fontSize: 14.sp,
             color: Color(0xff7A7A7A),
@@ -176,7 +176,7 @@ class _LongPutPanelState extends State<LongPutPanel> {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("좌우거리",
+                  Text("Sides Distance",
                     style: TextStyle(
                       fontSize: 14.sp,
                       color: Color(0xff7A7A7A),
@@ -195,7 +195,7 @@ class _LongPutPanelState extends State<LongPutPanel> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text("퍼팅거리",
+                  Text("Putt Distance",
                     style: TextStyle(
                       fontSize: 14.sp,
                       color: Color(0xff7A7A7A),
@@ -214,7 +214,7 @@ class _LongPutPanelState extends State<LongPutPanel> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text("스키드 거리",
+                  Text("Skid Distance",
                     style: TextStyle(
                       fontSize: 14.sp,
                       color: Color(0xff7A7A7A),
@@ -233,7 +233,7 @@ class _LongPutPanelState extends State<LongPutPanel> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text("발사각",
+                  Text("Launch Angle",
                     style: TextStyle(
                       fontSize: 14.sp,
                       color: Color(0xff7A7A7A),

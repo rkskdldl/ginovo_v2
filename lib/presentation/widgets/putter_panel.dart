@@ -26,7 +26,7 @@ class _PutterSectionState extends State<PutterSection> {
           SizedBox(height: 40.w,),
           Align(
             alignment: Alignment.centerLeft,
-            child: Text("페이스 각도",
+            child: Text("Face Angle",
               style: TextStyle(
                 fontWeight: FontWeight.w600,
                 color: Colors.black,

@@ -90,7 +90,7 @@ class _LongPutResultPageState extends State<LongPutResultPage> {
                         crossAxisAlignment: CrossAxisAlignment.baseline,
                         textBaseline: TextBaseline.alphabetic,
                         children: [
-                          Text("그린 스피드"),
+                          Text("Green Speed"),
                           SizedBox(width: 8.w,),
                           Align(
                               alignment: Alignment.bottomRight,
@@ -123,7 +123,7 @@ class _LongPutResultPageState extends State<LongPutResultPage> {
                               Row(
                                 children: [
                                   Expanded(
-                                    child: Text("퍼팅 결과",
+                                    child: Text("Putt Results",
                                       style: TextStyle(
                                         fontWeight: FontWeight.w600,
                                         color: Colors.black,
@@ -137,7 +137,7 @@ class _LongPutResultPageState extends State<LongPutResultPage> {
                                         borderRadius: BorderRadius.circular(10.w),
                                         border: Border.all(color: Color(0xff45AAF2),)
                                     ),
-                                    child: Text("롱펏 모드",
+                                    child: Text("LongPutt Mode",
                                       style: TextStyle(
                                         color: Color(0xff45AAF2),
                                         fontSize: 10.sp,
@@ -163,17 +163,17 @@ class _LongPutResultPageState extends State<LongPutResultPage> {
                               SizedBox(height: 20.w,),
                               Row(
                                 children: [
-                                  Expanded(child: DataPanel(title: "임팩트 타임", value: "${widget.hittingTimeTxt}")),
+                                  Expanded(child: DataPanel(title: "Impact Time", value: "${widget.hittingTimeTxt}")),
                                   SizedBox(width: 12.w,),
-                                  Expanded(child: DataPanel(title: "볼 스피드", value: "${widget.initialSpeedTxt}"))
+                                  Expanded(child: DataPanel(title: "Ball Speed", value: "${widget.initialSpeedTxt}"))
                                 ],
                               ),
                               SizedBox(height: 16.w,),
                               Row(
                                 children: [
-                                  Expanded(child: DataPanel(title: "임팩트", value: "${widget.hittingAmountTxt}")),
+                                  Expanded(child: DataPanel(title: "Impact", value: "${widget.hittingAmountTxt}")),
                                   SizedBox(width: 12.w,),
-                                  Expanded(child: DataPanel(title: "그린 스피드", value: "${widget.greenSpeedTxt}"))
+                                  Expanded(child: DataPanel(title: "Green Speed", value: "${widget.greenSpeedTxt}"))
                                 ],
                               ),
                               SizedBox(height: 24.w,),
