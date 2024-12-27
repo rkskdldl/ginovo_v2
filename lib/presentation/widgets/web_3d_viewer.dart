@@ -90,7 +90,7 @@ class _Web3dViewerState extends State<Web3dViewer> {
          // 모델 크기 조정
         model.scale.set(1, 1, 1);  // 필요에 맞게 크기 조정
         console.log('모델 로드 성공:', gltf);
-         camera.rotation.z = ${(widget.spinAngle-270) * pi /180};
+         camera.rotation.z = ${(widget.spinAngle) * pi /180};
         
         
             // 애니메이션 루프

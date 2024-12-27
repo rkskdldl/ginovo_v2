@@ -6,6 +6,7 @@ import 'package:ginovo_result/presentation/widgets/putter_panel.dart';
 import 'package:ginovo_result/presentation/widgets/rotation_panel.dart';
 import 'package:ginovo_result/presentation/widgets/web_3d_viewer.dart';
 import 'package:vector_math/vector_math_64.dart' as vec;
+import '../../../main.dart';
 import '../../widgets/data_panel.dart';
 class LongPutResultPage extends StatefulWidget {
   const LongPutResultPage({
@@ -14,6 +15,10 @@ class LongPutResultPage extends StatefulWidget {
     required this.skidPoints,
     required this.greenSpeedTxt,
     required this.targetDistance,
+    required this.gapDistanceTxt,
+    required this.puttingDistanceTxt,
+    required this.skidDistanceTxt,
+    required this.launchAngleTxt,
     required this.hittingTimeTxt,
     required this.initialSpeedTxt,
     required this.hittingAmountTxt,
@@ -28,6 +33,10 @@ class LongPutResultPage extends StatefulWidget {
   final List<vec.Vector2> skidPoints;
   final String greenSpeedTxt;
   final double targetDistance;
+  final String gapDistanceTxt;
+  final String puttingDistanceTxt;
+  final String skidDistanceTxt;
+  final String launchAngleTxt;
   final String hittingTimeTxt;
   final String initialSpeedTxt;
   final String hittingAmountTxt;
@@ -73,7 +82,9 @@ class _LongPutResultPageState extends State<LongPutResultPage> {
                 child: Row(
                   children: [
                     SizedBox(width: 8.w,),
-                    IconButton(onPressed: (){}, icon: Icon(Icons.arrow_back_ios)),
+                    IconButton(onPressed: (){
+                      navigatorKey.currentState?.pop();
+                    }, icon: Icon(Icons.arrow_back_ios)),
                     Expanded(
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.baseline,
@@ -109,33 +120,58 @@ class _LongPutResultPageState extends State<LongPutResultPage> {
                           child: Column(
                             children: [
                               SizedBox(height: 10.w,),
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text("퍼팅 결과",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.black,
-                                    fontSize: 24.sp,
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Text("퍼팅 결과",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.black,
+                                        fontSize: 24.sp,
+                                      ),
+                                    ),
                                   ),
-                                ),
+                                  Container(
+                                    padding: EdgeInsets.symmetric(horizontal: 6.w,vertical: 2.w),
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10.w),
+                                        border: Border.all(color: Color(0xff45AAF2),)
+                                    ),
+                                    child: Text("롱펏 모드",
+                                      style: TextStyle(
+                                        color: Color(0xff45AAF2),
+                                        fontSize: 10.sp,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  )
+                                ],
                               ),
                               SizedBox(height: 16.w,),
                               //#region 매트 부분
                               isTransPoints?
-                              LongPutPanel(points: points, skidPoints: skidPoints,targetDistance: widget.targetDistance/100,):Container(),
+                              LongPutPanel(
+                                points: points,
+                                skidPoints: skidPoints,
+                                targetDistance: widget.targetDistance/100,
+                                gapDistanceTxt: widget.gapDistanceTxt,
+                                puttingDistanceTxt: widget.puttingDistanceTxt,
+                                skidDistanceTxt: widget.skidDistanceTxt,
+                                launchAngleTxt: widget.launchAngleTxt,
+                              ):Container(),
                               //#endregion
                               SizedBox(height: 20.w,),
                               Row(
                                 children: [
-                                  Expanded(child: DataPanel(title: "타격 시간", value: "${widget.hittingTimeTxt}")),
+                                  Expanded(child: DataPanel(title: "임팩트 타임", value: "${widget.hittingTimeTxt}")),
                                   SizedBox(width: 12.w,),
-                                  Expanded(child: DataPanel(title: "초기 속도", value: "${widget.initialSpeedTxt}"))
+                                  Expanded(child: DataPanel(title: "볼 스피드", value: "${widget.initialSpeedTxt}"))
                                 ],
                               ),
                               SizedBox(height: 16.w,),
                               Row(
                                 children: [
-                                  Expanded(child: DataPanel(title: "충격량", value: "${widget.hittingAmountTxt}")),
+                                  Expanded(child: DataPanel(title: "임팩트", value: "${widget.hittingAmountTxt}")),
                                   SizedBox(width: 12.w,),
                                   Expanded(child: DataPanel(title: "그린 스피드", value: "${widget.greenSpeedTxt}"))
                                 ],

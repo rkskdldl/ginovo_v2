@@ -54,10 +54,13 @@ class DataPanel extends StatelessWidget {
 class PanelContainer extends StatefulWidget {
   const PanelContainer({
     super.key,
-    required this.titleWidget,
-    required this.childWidget});
-  final Widget titleWidget;
+    this.titleWidget,
+    required this.childWidget,
+    this.customPadding
+  });
+  final Widget? titleWidget;
   final Widget childWidget;
+  final EdgeInsetsGeometry? customPadding;
   @override
   State<PanelContainer> createState() => _PanelContainerState();
 }
@@ -67,7 +70,7 @@ class _PanelContainerState extends State<PanelContainer> {
   Widget build(BuildContext context) {
     return Container(
       width:double.maxFinite,
-      padding: EdgeInsets.all(24.w),
+      padding: widget.customPadding??EdgeInsets.all(24.w),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16), // 둥근 모서리
@@ -82,7 +85,7 @@ class _PanelContainerState extends State<PanelContainer> {
       ),
       child: Column(
         children: [
-          widget.titleWidget,
+          widget.titleWidget??Container(),
           SizedBox(height: 16.w,),
           widget.childWidget,
         ],

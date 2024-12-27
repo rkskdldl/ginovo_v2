@@ -12,12 +12,20 @@ class MatPanel extends StatefulWidget {
     required this.startPoint,
     required this.endPoint,
     required this.isTransPoints,
+    required this.gapDistanceTxt,
+    required this.puttingDistanceTxt,
+    required this.skidDistanceTxt,
+    required this.launchAngleTxt,
   });
   final List<vec.Vector2> points;
   final List<vec.Vector2> skidPoints;
   final StartPoint startPoint;
   final EndPoint endPoint;
   final bool isTransPoints;
+  final String gapDistanceTxt;
+  final String puttingDistanceTxt;
+  final String skidDistanceTxt;
+  final String launchAngleTxt;
   @override
   State<MatPanel> createState() => _MatPanelState();
 }
@@ -30,7 +38,7 @@ class _MatPanelState extends State<MatPanel> {
       child:
       Row(
         children: [
-          const Spacer(),
+          widget.points.first.x>widget.points.last.x?Captions():Spacer(),
           Stack(
             children: [
               SizedBox(
@@ -109,96 +117,100 @@ class _MatPanelState extends State<MatPanel> {
               ),
             ],
           ),
-          Expanded(
-              child: Container(
-                height: MatCalculator.convertHeight.w,
-                padding: EdgeInsets.only(left: 16.w),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text("이격거리",
-                          style: TextStyle(
-                            fontSize: 14.sp,
-                            color: Color(0xff7A7A7A),
-                          ),
-                        ),
-                        Text("0.02m",
-                          style: TextStyle(
-                              fontSize: 24.sp,
-                              color: Color(0xff000000),
-                              fontWeight: FontWeight.w500
-                          ),
-                        ),
-                      ],
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text("이동거리",
-                          style: TextStyle(
-                            fontSize: 14.sp,
-                            color: Color(0xff7A7A7A),
-                          ),
-                        ),
-                        Text("3.1m",
-                          style: TextStyle(
-                              fontSize: 24.sp,
-                              color: Color(0xff000000),
-                              fontWeight: FontWeight.w500
-                          ),
-                        ),
-                      ],
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text("스키드 거리",
-                          style: TextStyle(
-                            fontSize: 14.sp,
-                            color: Color(0xff7A7A7A),
-                          ),
-                        ),
-                        Text("0.2m",
-                          style: TextStyle(
-                              fontSize: 24.sp,
-                              color: Color(0xff000000),
-                              fontWeight: FontWeight.w500
-                          ),
-                        ),
-                      ],
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text("이격각",
-                          style: TextStyle(
-                            fontSize: 14.sp,
-                            color: Color(0xff7A7A7A),
-                          ),
-                        ),
-                        Text("3.0°",
-                          style: TextStyle(
-                              fontSize: 24.sp,
-                              color: Color(0xff000000),
-                              fontWeight: FontWeight.w500
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              )
-          ),
+          widget.points.first.x>widget.points.last.x?Spacer():Captions(),
         ],
       ),
+    );
+  }
+
+  Widget Captions(){
+    return Expanded(
+        child: Container(
+          height: MatCalculator.convertHeight.w,
+          padding: EdgeInsets.only(left: 16.w),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("좌우거리",
+                    style: TextStyle(
+                      fontSize: 14.sp,
+                      color: Color(0xff7A7A7A),
+                    ),
+                  ),
+                  Text("${widget.gapDistanceTxt}",
+                    style: TextStyle(
+                        fontSize: 24.sp,
+                        color: Color(0xff000000),
+                        fontWeight: FontWeight.w500
+                    ),
+                  ),
+                ],
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text("퍼팅거리",
+                    style: TextStyle(
+                      fontSize: 14.sp,
+                      color: Color(0xff7A7A7A),
+                    ),
+                  ),
+                  Text("${widget.puttingDistanceTxt}",
+                    style: TextStyle(
+                        fontSize: 24.sp,
+                        color: Color(0xff000000),
+                        fontWeight: FontWeight.w500
+                    ),
+                  ),
+                ],
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text("스키드 거리",
+                    style: TextStyle(
+                      fontSize: 14.sp,
+                      color: Color(0xff7A7A7A),
+                    ),
+                  ),
+                  Text("${widget.skidDistanceTxt}",
+                    style: TextStyle(
+                        fontSize: 24.sp,
+                        color: Color(0xff000000),
+                        fontWeight: FontWeight.w500
+                    ),
+                  ),
+                ],
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text("발사각",
+                    style: TextStyle(
+                      fontSize: 14.sp,
+                      color: Color(0xff7A7A7A),
+                    ),
+                  ),
+                  Text("${widget.launchAngleTxt}",
+                    style: TextStyle(
+                        fontSize: 24.sp,
+                        color: Color(0xff000000),
+                        fontWeight: FontWeight.w500
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        )
     );
   }
 }

@@ -39,6 +39,10 @@ class MyApp extends StatelessWidget {
       //       spinType:  SpinType.top,
       //       putterLRAngle: 20.0,
       //       putterTBAngle: 15.0,
+      //       gapDistanceTxt: "R 0.2m",
+      //       puttingDistanceTxt: "3.1m",
+      //       skidDistanceTxt: "0.2m",
+      //       launchAngleTxt: "R 3.0°",
       //     )
       // ),
       //   onGenerateRoute: (routes)=>MaterialPageRoute(
@@ -58,6 +62,10 @@ class MyApp extends StatelessWidget {
       //         spinType:  SpinType.top,
       //         putterLRAngle: 20.0,
       //         putterTBAngle: 15.0,
+      //         gapDistanceTxt: "R 0.2m",
+      //         puttingDistanceTxt: "3.1m",
+      //         skidDistanceTxt: "0.2m",
+      //         launchAngleTxt: "R 3.0°",
       //       )
       //   ),
         onGenerateRoute: (routes)=>

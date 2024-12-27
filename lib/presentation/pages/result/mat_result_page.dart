@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ginovo_result/main.dart';
 import 'package:ginovo_result/presentation/widgets/mat_panel.dart';
 import 'package:ginovo_result/presentation/widgets/putter_panel.dart';
 import 'package:ginovo_result/presentation/widgets/web_3d_viewer.dart';
@@ -19,6 +20,10 @@ class MatResultPage extends StatefulWidget {
     required this.startPoint,
     required this.endPoint,
     required this.pathTxt,
+    required this.gapDistanceTxt,
+    required this.puttingDistanceTxt,
+    required this.skidDistanceTxt,
+    required this.launchAngleTxt,
     required this.hittingTimeTxt,
     required this.initialSpeedTxt,
     required this.hittingAmountTxt,
@@ -35,6 +40,10 @@ class MatResultPage extends StatefulWidget {
   final StartPoint startPoint;
   final EndPoint endPoint;
   final String pathTxt;
+  final String gapDistanceTxt;
+  final String puttingDistanceTxt;
+  final String skidDistanceTxt;
+  final String launchAngleTxt;
   final String hittingTimeTxt;
   final String initialSpeedTxt;
   final String hittingAmountTxt;
@@ -81,7 +90,9 @@ class _MatResultPageState extends State<MatResultPage> {
                 child: Row(
                   children: [
                     SizedBox(width: 8.w,),
-                    IconButton(onPressed: (){}, icon: Icon(Icons.arrow_back_ios)),
+                    IconButton(onPressed: (){
+                      navigatorKey.currentState?.pop();
+                    }, icon: Icon(Icons.arrow_back_ios)),
                     Expanded(
                       child: Row(
                         children: [
@@ -141,32 +152,59 @@ class _MatResultPageState extends State<MatResultPage> {
                           child: Column(
                             children: [
                               SizedBox(height: 10.w,),
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text("퍼팅 결과",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.black,
-                                    fontSize: 24.sp,
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Text("퍼팅 결과",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.black,
+                                        fontSize: 24.sp,
+                                      ),
+                                    ),
                                   ),
-                                ),
+                                  Container(
+                                    padding: EdgeInsets.symmetric(horizontal: 6.w,vertical: 2.w),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10.w),
+                                      border: Border.all(color: Color(0xff26DD81),)
+                                    ),
+                                    child: Text("매트 모드",
+                                    style: TextStyle(
+                                      color: Color(0xff26DD81),
+                                      fontSize: 10.sp,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                    ),
+                                  )
+                                ],
                               ),
                               SizedBox(height: 16.w,),
                               //#region 매트 부분
-                              isTransPoints?MatPanel(points: points, skidPoints: skidPoints, startPoint: widget.startPoint, endPoint: widget.endPoint, isTransPoints: isTransPoints):Container(),
+                              isTransPoints?MatPanel(
+                                  points: points,
+                                  skidPoints: skidPoints,
+                                  startPoint: widget.startPoint,
+                                  endPoint: widget.endPoint,
+                                  isTransPoints: isTransPoints,
+                                  gapDistanceTxt: widget.gapDistanceTxt,
+                                  puttingDistanceTxt: widget.puttingDistanceTxt,
+                                  skidDistanceTxt: widget.skidDistanceTxt,
+                                  launchAngleTxt: widget.launchAngleTxt,
+                              ):Container(),
                               //#endregion
                               SizedBox(height: 20.w,),
                               Row(
                                 children: [
-                                  Expanded(child: DataPanel(title: "타격 시간", value: "${widget.hittingTimeTxt}")),
+                                  Expanded(child: DataPanel(title: "임팩트 타임", value: "${widget.hittingTimeTxt}")),
                                   SizedBox(width: 12.w,),
-                                  Expanded(child: DataPanel(title: "초기 속도", value: "${widget.initialSpeedTxt}"))
+                                  Expanded(child: DataPanel(title: "볼 스피드", value: "${widget.initialSpeedTxt}"))
                                 ],
                               ),
                               SizedBox(height: 16.w,),
                               Row(
                                 children: [
-                                  Expanded(child: DataPanel(title: "충격량", value: "${widget.hittingAmountTxt}")),
+                                  Expanded(child: DataPanel(title: "임팩트", value: "${widget.hittingAmountTxt}")),
                                   SizedBox(width: 12.w,),
                                   Expanded(child: DataPanel(title: "그린 스피드", value: "${widget.greenSpeedTxt}"))
                                 ],
