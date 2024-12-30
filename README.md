@@ -137,3 +137,16 @@ pubspec.yaml
 | 2   | 자유모드 실행함수  | freeModeOnClick           | Function |  | |
 | 3   | 롱펏모드 실행함수  | longPuttOnClick           | Function |  | |
 
+
+#### hitting_spin_panel.dart
+타점 & 스핀 패널
+
+| No. | 명칭         | 변수명              | 자료형           | 설명                                                                                                                            | 비고                                |
+|-----|------------|------------------|---------------|-------------------------------------------------------------------------------------------------------------------------------|-----------------------------------|
+| 1   | 타점 리스트  |          | Function |  |  |
+| 2   | 회전 각도 리스트  | freeModeOnClick           | Function |  | |
+| 3   | 메인 회전 각도  | longPuttOnClick           | Function |  | |
+| 4   | 메인 회전 각도 빈도  | matModeOnClick         | Function |  |  |
+| 5   | 타점 포인트 | freeModeOnClick           | Function |  | |
+| 6   | 타점 포인트 빈도  | longPuttOnClick           | Function |  | |
+
