@@ -6,7 +6,7 @@
 
 <details>
   <summary>폴더 구조 (old)</summary>
-    ![image info](./folder_tree_old.png)
+<img src="/folder_tree_old.png" alt="폴더 구조" style="height: 719px; width:998px;"/>
 </details>
 
 
