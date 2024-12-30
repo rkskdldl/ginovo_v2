@@ -1,7 +1,8 @@
 # ginovo_result
 
 지노버 결과화면, 홈화면 퍼브리싱 코드
-
+<details>
+  <summary>폴더 구조 (old)</summary>
 ## 폴더 구조
 ```bash
 .
@@ -40,6 +41,8 @@
     │       └── web_3d_viewer.dart   [3d 회전 시뮬레이션 html을 InAppWebView로 보여주는 위젯]
     └── main.dart   [앱 시작 파일]
 ```
+
+</details>
 
 
 ## 추가 라이브러리
