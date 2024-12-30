@@ -1,6 +1,6 @@
 # ginovo_result
 
-A new Flutter project.
+지노버 결과화면, 홈화면 퍼브리싱 코드
 
 ## 폴더 구조
 ```bash
