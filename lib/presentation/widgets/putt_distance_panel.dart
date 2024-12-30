@@ -29,7 +29,7 @@ class _PuttDistancePanelState extends State<PuttDistancePanel> {
     return PanelContainer(
         titleWidget: Align(
           alignment: Alignment.centerLeft,
-          child: Text("putt distance(m)",
+          child: Text("Putt Distance(m)",
             style: TextStyle(
               fontSize: 20.sp,
               color: const Color(0xff000000),

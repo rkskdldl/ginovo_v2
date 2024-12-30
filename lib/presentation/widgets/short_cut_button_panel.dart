@@ -34,7 +34,7 @@ class _ShortCutButtonPanelState extends State<ShortCutButtonPanel> {
             children: [
               GestureDetector(
                 onTap: (){
-
+                  widget.matModeOnClick();
                 },
                 child: Column(
                   children: [
@@ -52,7 +52,7 @@ class _ShortCutButtonPanelState extends State<ShortCutButtonPanel> {
               ),
               GestureDetector(
                 onTap: (){
-
+                  widget.freeModeOnClick();
                 },
                 child: Column(
                   children: [
@@ -70,29 +70,7 @@ class _ShortCutButtonPanelState extends State<ShortCutButtonPanel> {
               ),
               GestureDetector(
                 onTap: (){
-                  navigatorKey.currentState?.push(
-                    MaterialPageRoute(
-                        builder: (_)=>LongPutResultPage(
-                          points: [vec.Vector2(0, 0), vec.Vector2(20,300),],
-                          skidPoints: [vec.Vector2(0, 0), vec.Vector2(0,40),],
-                          greenSpeedTxt: '3.0',
-                          targetDistance: 300,
-                          hittingTimeTxt: '1.2s',
-                          initialSpeedTxt: '1.7m/s',
-                          hittingAmountTxt: '0.04N',
-                          spinAxisAngle: -20,
-                          spinRPM: 1200,
-                          hittingPos: Offset(-40, 10),
-                          spinType:  SpinType.top,
-                          putterLRAngle: 20.0,
-                          putterTBAngle: 15.0,
-                          gapDistanceTxt: "R 0.2m",
-                          puttingDistanceTxt: "3.1m",
-                          skidDistanceTxt: "0.2m",
-                          launchAngleTxt: "R 3.0°",
-                        )
-                    ),
-                  );
+                    widget.longPuttOnClick();
                 },
                 child: Column(
                   children: [

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ginovo_result/main.dart';
+import 'package:ginovo_result/presentation/pages/result/free_result_page.dart';
 import 'package:ginovo_result/presentation/pages/result/mat_result_page.dart';
 import 'package:ginovo_result/presentation/widgets/ball_speed_panel.dart';
 import 'package:ginovo_result/presentation/widgets/data_panel.dart';
@@ -74,7 +75,26 @@ class _HomePageState extends State<HomePage> {
                     ));
                   },
                   freeModeOnClick: (){
-
+                    navigatorKey.currentState?.push(MaterialPageRoute(
+                        builder: (_)=>FreeResultPage(
+                          points: [vec.Vector2(0, 0), vec.Vector2(20,1200),],
+                          skidPoints: [vec.Vector2(0, 0), vec.Vector2(0,40),],
+                          greenSpeedTxt: '3.0',
+                          hittingTimeTxt: '1.2s',
+                          initialSpeedTxt: '1.7m/s',
+                          hittingAmountTxt: '0.04N',
+                          spinAxisAngle: -20,
+                          spinRPM: 300,
+                          hittingPos: Offset(-40, 10),
+                          spinType:  SpinType.top,
+                          putterLRAngle: 20.0,
+                          putterTBAngle: 15.0,
+                          gapDistanceTxt: "R 0.2m",
+                          puttingDistanceTxt: "3.1m",
+                          skidDistanceTxt: "0.2m",
+                          launchAngleTxt: "R 3.0°",
+                        )
+                    ));
                   },
                   longPuttOnClick: (){
                     navigatorKey.currentState?.push(MaterialPageRoute(
