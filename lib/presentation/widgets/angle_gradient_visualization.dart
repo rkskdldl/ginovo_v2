@@ -389,9 +389,9 @@ class QuaterCircleAngleWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: width.w,
-      height:  (height/2).w,
+      height:  (height/2),
       child: CustomPaint(
-        size: Size(width.w, (height/2).w), // 반구의 크기 (너비와 높이)
+        size: Size(width, (height/2)), // 반구의 크기 (너비와 높이)
         painter: QuaterCirclePainter(),
       ),
     );
@@ -514,10 +514,10 @@ class QuaterHighLightTxtWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: width.w,
-      height:  (height/2).w,
+      width: width,
+      height:  (height/2),
       child: CustomPaint(
-        size: Size(width.w, (height/2).w), // 반구의 크기 (너비와 높이)
+        size: Size(width, (height/2)), // 반구의 크기 (너비와 높이)
         painter: QuaterHighLightTxtPainter(
             angle:angle,
             percent: percent),
