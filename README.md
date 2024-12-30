@@ -143,10 +143,10 @@ pubspec.yaml
 
 | No. | 명칭         | 변수명              | 자료형           | 설명                                                                                                                            | 비고                                |
 |-----|------------|------------------|---------------|-------------------------------------------------------------------------------------------------------------------------------|-----------------------------------|
-| 1   | 타점 리스트  |          | Function |  |  |
-| 2   | 회전 각도 리스트  | freeModeOnClick           | Function |  | |
-| 3   | 메인 회전 각도  | longPuttOnClick           | Function |  | |
-| 4   | 메인 회전 각도 빈도  | matModeOnClick         | Function |  |  |
-| 5   | 타점 포인트 | freeModeOnClick           | Function |  | |
-| 6   | 타점 포인트 빈도  | longPuttOnClick           | Function |  | |
+| 1   | 타점 리스트  | hittingsPoints          | List<Offset> | x 범위: -50 ~ 50 y 범위 -50 ~ 50 |  |
+| 2   | 회전 각도 리스트  | angles           | Function | List<double> |각도 범위 -90도 ~ 90도 |
+| 3   | 메인 회전 각도  | mostAngle           | Function | double | 각도 범위 -90도 ~ 90도 |
+| 4   | 메인 회전 각도 빈도  | mostAnglePercent         | List<double> |  |  |
+| 5   | 메인 타점 포인트 | mostHittingPoint         | Offset |  x 범위: -50 ~ 50 y 범위 -50 ~ 50  | |
+| 6   | 메인 타점 포인트 빈도  | mostHittingPercemt           | double |  | |
 
