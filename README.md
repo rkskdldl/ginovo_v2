@@ -143,10 +143,10 @@ pubspec.yaml
 
 | No. | 명칭         | 변수명              | 자료형           | 설명                                                                                                                            | 비고                                |
 |-----|------------|------------------|---------------|-------------------------------------------------------------------------------------------------------------------------------|-----------------------------------|
-| 1   | 타점 리스트  | hittingsPoints          | List<Offset> | x 범위: -50 ~ 50 y 범위 -50 ~ 50 |  |
-| 2   | 회전 각도 리스트  | angles           | Function | List<double> |각도 범위 -90도 ~ 90도 |
+| 1   | 타점 리스트  | hittingsPoints          | List`<Offset>` | x 범위: -50 ~ 50 y 범위 -50 ~ 50 |  |
+| 2   | 회전 각도 리스트  | angles           | Function | List`<double>` |각도 범위 -90도 ~ 90도 |
 | 3   | 메인 회전 각도  | mostAngle           | Function | double | 각도 범위 -90도 ~ 90도 |
-| 4   | 메인 회전 각도 빈도  | mostAnglePercent         | List<double> |  |  |
+| 4   | 메인 회전 각도 빈도  | mostAnglePercent         | List`<double>` |  |  |
 | 5   | 메인 타점 포인트 | mostHittingPoint         | Offset |  x 범위: -50 ~ 50 y 범위 -50 ~ 50  | |
 | 6   | 메인 타점 포인트 빈도  | mostHittingPercemt           | double |  | |
 
@@ -157,7 +157,7 @@ pubspec.yaml
 
 | No. | 명칭         | 변수명              | 자료형           | 설명                                                                                                                            | 비고                                |
 |-----|------------|------------------|---------------|-------------------------------------------------------------------------------------------------------------------------------|-----------------------------------|
-| 1   | 거리 데이터 리스트  | data          | List<DistanceBarElementModel> | realDistance: 실제 이동거리 baseDistance: 기준 이동거리 index: 거리가 잛은 순으로 |  |
+| 1   | 거리 데이터 리스트  | data          | List`<DistanceBarElementModel>` | realDistance: 실제 이동거리 baseDistance: 기준 이동거리 index: 거리가 짧은 순으로 |  |
 
 
 
@@ -167,7 +167,7 @@ pubspec.yaml
 | No. | 명칭         | 변수명              | 자료형           | 설명                                                                                                                            | 비고                                |
 |-----|------------|------------------|---------------|-------------------------------------------------------------------------------------------------------------------------------|-----------------------------------|
 | 1   | 그린스피드 콜백함수  | greenSpeedCallBack          | Function | 그린스피드 dropdown 변경시 호출 |  |
-| 2   | 속도  데이터 리스트  | data          | List<SpeedBarElementModel> | realSpeed: 실제 속도 baseSpeed: 기준 속도 targetDistance: 타격 목표거리 index: 거리가 잛은 순으로 |  |
+| 2   | 속도  데이터 리스트  | data          | List`<SpeedBarElementModel>` | realSpeed: 실제 속도 baseSpeed: 기준 속도 targetDistance: 타격 목표거리 index: 거리가 짧은 순으로 |  |
 
 
 
@@ -178,7 +178,7 @@ pubspec.yaml
 |-----|------------|------------------|---------------|-------------------------------------------------------------------------------------------------------------------------------|-----------------------------------|
 | 1   | 탑뷰 메인 각도  | mostTopAngle          | double |  |  |
 | 2   | 탑뷰 메인 각도 빈도  | mostTopPercent          | double | 0% ~ 100% |  |
-| 3   | 탑뷰 페이스 각도 리스트  | topAngles          | List<double> |  |  |
+| 3   | 탑뷰 페이스 각도 리스트  | topAngles          | List`<double>` |  |  |
 | 4   | 사이드뷰 메인 각도  | mostTopPercent          | double |  |  |
 | 5   | 사이드뷰 메인 각도 빈도  | mostTopAngle          | double |  0% ~ 100%  |  |
 | 6   | 사이드뷰 페이스 각도 리스트  | mostTopPercent          | double |  |  |
