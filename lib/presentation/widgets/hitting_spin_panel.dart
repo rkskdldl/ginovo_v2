@@ -28,10 +28,12 @@ class HittingSpinPanel extends StatefulWidget {
 class _HittingSpinPanelState extends State<HittingSpinPanel> {
   @override
   Widget build(BuildContext context) {
-    return PanelContainer(
-        titleWidget: Align(
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Align(
           alignment: Alignment.centerLeft,
-          child: Text("RBI & Spin",
+          child: Text("Hitting Point & Spin",
             style: TextStyle(
               fontSize: 20.sp,
               color: const Color(0xff000000),
@@ -39,62 +41,66 @@ class _HittingSpinPanelState extends State<HittingSpinPanel> {
             ),
           ),
         ),
-        childWidget:Container(
-          child:Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Expanded(
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    Container(
-                        width: 240.w,
-                        height:160.w,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Stack(
+        SizedBox(height: 20.w,),
+        PanelContainer(
+            childWidget:Container(
+              child:Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Expanded(
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        Container(
+                            width: 240.w,
+                            height:160.w,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.end,
                               children: [
-                                Container(
-                                    width:110.w,
-                                    height: 110.w,
-                                    child: Image.asset("assets/image/hitting_point_base.png",width: 100.w,height: 100.w,)),
-                                Positioned(
-                                    left: 0,
-                                    right: 0,
-                                    top: 0,
-                                    bottom: 0,
-                                    child: OffsetVisualizer(
-                                      offsets:  widget.hittingPoints,)
+                                Stack(
+                                  children: [
+                                    Container(
+                                        width:110.w,
+                                        height: 110.w,
+                                        child: Image.asset("assets/image/hitting_point_base.png",width: 100.w,height: 100.w,)),
+                                    Positioned(
+                                        left: 0,
+                                        right: 0,
+                                        top: 0,
+                                        bottom: 0,
+                                        child: OffsetVisualizer(
+                                          offsets:  widget.hittingPoints,)
+                                    ),
+                                  ],
                                 ),
                               ],
-                            ),
-                          ],
-                        )),
-                    Positioned(
-                      bottom: 55.w,
-                      child: AngleGradientVisualization(
-                          width: 150.w,height: 68.w,
-                          angles: widget.angles),
+                            )),
+                        Positioned(
+                          bottom: 55.w,
+                          child: AngleGradientVisualization(
+                              width: 150.w,height: 68.w,
+                              angles: widget.angles),
+                        ),
+                        Positioned(
+                            bottom: 55.w,
+                            child: Container(
+                                child: HighLightTxtWidget(width:240.w, height: 220.w,angle: widget.mostAngle,percent: widget.mostAnglePercent,))),
+                        Positioned(
+                            bottom: 0,
+                            child: HittingHighLightWidget(width: 150.w, height: 150.w,
+                                angle:widget.mostAngle, percent: widget.mostHittingPercent, redOffset: widget.mostHittingPoint))
+                      ],
                     ),
-                    Positioned(
-                        bottom: 55.w,
-                        child: Container(
-                            child: HighLightTxtWidget(width:240.w, height: 220.w,angle: widget.mostAngle,percent: widget.mostAnglePercent,))),
-                    Positioned(
-                        bottom: 0,
-                        child: HittingHighLightWidget(width: 150.w, height: 150.w,
-                            angle:widget.mostAngle, percent: widget.mostHittingPercent, redOffset: widget.mostHittingPoint))
-                  ],
-                ),
+                  ),
+                  Align(
+                      alignment: Alignment.bottomRight,
+                      child: Container(
+                          child: HeatMapIndicator())),
+                ],
               ),
-              Align(
-                  alignment: Alignment.bottomRight,
-                  child: Container(
-                      child: HeatMapIndicator())),
-            ],
-          ),
-        ));
+            )),
+      ],
+    );
   }
 }

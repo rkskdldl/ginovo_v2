@@ -92,8 +92,9 @@ class _GreenSpeedDropdownState extends State<GreenSpeedDropdown> {
       height: 30.w,
       padding: EdgeInsets.symmetric(horizontal: 8.w),
       decoration: BoxDecoration(
-        color: Color(0xfffbfbfb),
+        color: Color(0xffffffff),
         borderRadius: BorderRadius.circular(20.w),
+        border: Border.all(color: Color(0xffE4E4E4))
       ),
       child: DropdownButton<double>(
         value: selectedValue,

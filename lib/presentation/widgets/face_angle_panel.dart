@@ -27,6 +27,7 @@ class _FaceAnglePanelState extends State<FaceAnglePanel> {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisSize: MainAxisSize.min,
       children: [
         Align(
           alignment: Alignment.centerLeft,
@@ -47,6 +48,7 @@ class _FaceAnglePanelState extends State<FaceAnglePanel> {
                   childWidget:LayoutBuilder(builder: (ctx,constraints){
                     return Container(
                       child: Column(
+                        mainAxisSize: MainAxisSize.min,
                         children: [
                           Stack(
                             children: [

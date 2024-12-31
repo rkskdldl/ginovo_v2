@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ginovo_result/presentation/pages/history/history_page.dart';
 import 'package:ginovo_result/presentation/pages/home/home_page.dart';
 import 'package:ginovo_result/presentation/pages/result/long_put_result_page.dart';
 import 'package:ginovo_result/presentation/widgets/web_3d_viewer.dart';
@@ -68,9 +69,13 @@ class MyApp extends StatelessWidget {
       //         launchAngleTxt: "R 3.0°",
       //       )
       //   ),
+      //   onGenerateRoute: (routes)=>
+      //       MaterialPageRoute(
+      //           builder: (_)=>HomePage(),
+      //       ),
         onGenerateRoute: (routes)=>
             MaterialPageRoute(
-                builder: (_)=>HomePage(),
+              builder: (_)=>HistoryPage(),
             ),
         builder:(ctx,widget) {
           ScreenUtil.init(ctx, designSize: Size(AppSize.standardWidth, AppSize.standardHeight));

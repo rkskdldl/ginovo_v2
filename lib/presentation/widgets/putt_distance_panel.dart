@@ -26,8 +26,10 @@ class _PuttDistancePanelState extends State<PuttDistancePanel> {
 
   @override
   Widget build(BuildContext context) {
-    return PanelContainer(
-        titleWidget: Align(
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Align(
           alignment: Alignment.centerLeft,
           child: Text("Putt Distance(m)",
             style: TextStyle(
@@ -37,54 +39,58 @@ class _PuttDistancePanelState extends State<PuttDistancePanel> {
             ),
           ),
         ),
-        childWidget:Container(
-          child:Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Column(
+        SizedBox(height: 20.w,),
+        PanelContainer(
+            childWidget:Container(
+              child:Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Text("Hitting Target",
-                    style: TextStyle(
-                      fontSize:8.sp,
-                      fontWeight: FontWeight.w500,
-                      color: Color(0xff474747),
-                    ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text("Hitting Target",
+                        style: TextStyle(
+                          fontSize:8.sp,
+                          fontWeight: FontWeight.w500,
+                          color: Color(0xff474747),
+                        ),
+                      ),
+                      SizedBox(height: 8.w,),
+                      Text("",
+                        style: TextStyle(
+                          fontSize:8.sp,
+                          fontWeight: FontWeight.w500,
+                          color: Color(0xff474747),
+                        ),
+                      ),
+                    ],
                   ),
-                  SizedBox(height: 8.w,),
-                  Text("",
-                    style: TextStyle(
-                      fontSize:8.sp,
-                      fontWeight: FontWeight.w500,
-                      color: Color(0xff474747),
+                  SizedBox(width: 10.w,),
+                  Expanded(
+                    child: Container(
+                      width: double.maxFinite,
+                      child:LayoutBuilder(builder: (ctx,constraints){
+                        return  SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Container(
+                            constraints: BoxConstraints(minWidth: constraints.maxWidth),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                ...data.map((e)=>DistanceBarWidget(realDistance: e.realDistance, baseDistance: e.baseDistance, index: e.index)).toList(),
+                              ],
+                            ),
+                          ),
+                        );
+                      }),
                     ),
                   ),
                 ],
               ),
-              SizedBox(width: 10.w,),
-              Expanded(
-                child: Container(
-                  width: double.maxFinite,
-                  child:LayoutBuilder(builder: (ctx,constraints){
-                    return  SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Container(
-                        constraints: BoxConstraints(minWidth: constraints.maxWidth),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            ...data.map((e)=>DistanceBarWidget(realDistance: e.realDistance, baseDistance: e.baseDistance, index: e.index)).toList(),
-                          ],
-                        ),
-                      ),
-                    );
-                  }),
-                ),
-              ),
-            ],
-          ),
-        ));
+            )),
+      ],
+    );
   }
 }
 

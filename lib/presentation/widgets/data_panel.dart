@@ -86,7 +86,7 @@ class _PanelContainerState extends State<PanelContainer> {
       child: Column(
         children: [
           widget.titleWidget??Container(),
-          SizedBox(height: 16.w,),
+          widget.titleWidget!=null?SizedBox(height: 16.w,):Container(),
           widget.childWidget,
         ],
       ),

@@ -39,6 +39,9 @@ dependencies:
   vector_math: ^2.1.4
   flutter_inappwebview: ^6.1.5
   flutter_heat_map: ^1.2.1
+  fl_chart: ^0.69.2
+  calendar_date_picker2: ^1.1.8
+  intl: ^0.20.1
 
 dev_dependencies:
   flutter_test:

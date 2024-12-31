@@ -30,29 +30,31 @@ class _BallSpeedPanelState extends State<BallSpeedPanel> {
   }
   @override
   Widget build(BuildContext context) {
-    return PanelContainer(
-        titleWidget: Column(
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Row(
           children: [
-            //그린스피드 선택 드롭다운
-            Align(
-              alignment: Alignment.centerLeft,
-              child: GreenSpeedDropdown(
-                  onChangedCallback: (greenSpeed){
-                    // 변경된 그린스피드 콜백함수 (double로 리턴)
-                    widget.greenSpeedCallBack(greenSpeed);
-                  }
+            Text("Ball Speed",
+              style: TextStyle(
+                fontSize: 20.sp,
+                color: const Color(0xff000000),
+                fontWeight: FontWeight.w500,
               ),
             ),
-            SizedBox(height: 6.w,),
-            Row(
+            Spacer(),
+            GreenSpeedDropdown(
+                onChangedCallback: (greenSpeed){
+                  // 변경된 그린스피드 콜백함수 (double로 리턴)
+                  widget.greenSpeedCallBack(greenSpeed);
+                }
+            ),
+          ],
+        ),
+        SizedBox(height: 20.w,),
+        PanelContainer(
+            titleWidget: Row(
               children: [
-                Text("Ball Speed",
-                  style: TextStyle(
-                    fontSize: 20.sp,
-                    color: const Color(0xff000000),
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
                 Spacer(),
                 Text("Unit m/s",
                   style: TextStyle(
@@ -63,56 +65,56 @@ class _BallSpeedPanelState extends State<BallSpeedPanel> {
                 )
               ],
             ),
-          ],
-        ),
-        childWidget:Container(
-          child:Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
+            childWidget:Container(
+              child:Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Text("Target Distance",
-                    style: TextStyle(
-                      fontSize:8.sp,
-                      fontWeight: FontWeight.w500,
-                      color: Color(0xff474747),
-                    ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text("Target Distance",
+                        style: TextStyle(
+                          fontSize:8.sp,
+                          fontWeight: FontWeight.w500,
+                          color: Color(0xff474747),
+                        ),
+                      ),
+                      SizedBox(height: 8.w,),
+                      Text("Standard Speed",
+                        style: TextStyle(
+                          fontSize:8.sp,
+                          fontWeight: FontWeight.w500,
+                          color: Color(0xff474747),
+                        ),
+                      ),
+                    ],
                   ),
-                  SizedBox(height: 8.w,),
-                  Text("Standard Speed",
-                    style: TextStyle(
-                      fontSize:8.sp,
-                      fontWeight: FontWeight.w500,
-                      color: Color(0xff474747),
+                  SizedBox(width: 10.w,),
+                  Expanded(
+                    child: Container(
+                      width: double.maxFinite,
+                      child:LayoutBuilder(builder: (ctx,constraints){
+                        return  SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Container(
+                            constraints: BoxConstraints(minWidth: constraints.maxWidth),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                ...data.map((e)=>SpeedBarWidget(realSpeed: e.realSpeed, baseSpeed: e.baseSpeed, targetDistance: e.targetDistance, index: e.index)).toList(),
+                              ],
+                            ),
+                          ),
+                        );
+                      }),
                     ),
                   ),
                 ],
               ),
-              SizedBox(width: 10.w,),
-              Expanded(
-                child: Container(
-                  width: double.maxFinite,
-                  child:LayoutBuilder(builder: (ctx,constraints){
-                    return  SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Container(
-                        constraints: BoxConstraints(minWidth: constraints.maxWidth),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            ...data.map((e)=>SpeedBarWidget(realSpeed: e.realSpeed, baseSpeed: e.baseSpeed, targetDistance: e.targetDistance, index: e.index)).toList(),
-                          ],
-                        ),
-                      ),
-                    );
-                  }),
-                ),
-              ),
-            ],
-          ),
-        ));
+            )),
+      ],
+    );
   }
 }
 
