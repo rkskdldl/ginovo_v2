@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 List<List<Color>> colorSets = [
-  [Colors.lightGreenAccent.withOpacity(0.8), Colors.greenAccent, Colors.lightGreenAccent.withOpacity(0.8)],
+  [Colors.lightGreenAccent.withOpacity(0.8), Colors.lightGreenAccent, Colors.lightGreenAccent.withOpacity(0.8)],
   [Colors.yellowAccent.withOpacity(0.8),Colors.yellow,Colors.yellowAccent.withOpacity(0.8)],
   [Colors.orangeAccent.withOpacity(0.8),Colors.orange,Colors.orangeAccent.withOpacity(0.8)],
   [Colors.redAccent.withOpacity(0.8),Colors.red, Colors.redAccent.withOpacity(0.8)],
@@ -13,17 +13,19 @@ class AngleGradientVisualization extends StatelessWidget {
   final List<double> angles;
   final double width;
   final double height;
+  final double bias;
   const AngleGradientVisualization({Key? key,
     required this.angles,
     required this.width,
-    required this.height
+    required this.height,
+    this.bias = 1
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return CustomPaint(
       size: Size(width, (height/2)),
-      painter: RingHeatmapPainter(angles: angles),
+      painter: RingHeatmapPainter(angles: angles,bias: bias),
     );
   }
 }
@@ -32,17 +34,21 @@ class QuaterAngleGradientVisualization extends StatelessWidget {
   final List<double> angles;
   final double width;
   final double height;
+  final double bias;
   const QuaterAngleGradientVisualization({Key? key,
     required this.angles,
     required this.width,
-    required this.height
+    required this.height,
+    this.bias = 1,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return CustomPaint(
-      size: Size(width, (height/2)),
-      painter: QuaterRingHeatmapPainter(angles: angles),
+    return Container(
+      child: CustomPaint(
+        size: Size(width, (height)),
+        painter: QuaterRingHeatmapPainter(angles: angles,bias: bias),
+      ),
     );
   }
 }
@@ -50,8 +56,8 @@ class QuaterAngleGradientVisualization extends StatelessWidget {
 
 class RingHeatmapPainter extends CustomPainter {
   final List<double> angles;
-
-  RingHeatmapPainter({required this.angles});
+  final double bias;
+  RingHeatmapPainter({required this.angles,required this.bias});
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -86,8 +92,8 @@ class RingHeatmapPainter extends CustomPainter {
 
       // 그라데이션 정의
       Gradient gradient = SweepGradient(
-        startAngle: (270+ convertedKey) * pi / 180,
-        endAngle: (270+convertedKey +2) * pi / 180,
+        startAngle: (270+ (convertedKey*bias)) * pi / 180,
+        endAngle: (270+(convertedKey*bias) +2) * pi / 180,
         colors: counter==1?colorSets[0]:counter==2?colorSets[1]:counter==3?colorSets[2]:colorSets[3],
         stops:[0.0,0.5,1],
       );
@@ -102,7 +108,7 @@ class RingHeatmapPainter extends CustomPainter {
       // 원형 띠 그리기
       canvas.drawArc(
         rect,
-        (270+convertedKey) * pi / 180, // 시작 각도
+        (270+(convertedKey*bias)) * pi / 180, // 시작 각도
         4* pi / 180, // 전체 원 (360도)
         false,
         paint,
@@ -118,14 +124,14 @@ class RingHeatmapPainter extends CustomPainter {
 
 class QuaterRingHeatmapPainter extends CustomPainter {
   final List<double> angles;
-
-  QuaterRingHeatmapPainter({required this.angles});
+  final double bias;
+  QuaterRingHeatmapPainter({required this.angles,required this.bias});
 
   @override
   void paint(Canvas canvas, Size size) {
     final double strokeWidth = 6; // 띠 두께
     final Rect rect = Rect.fromCircle(
-      center: Offset(0, size.height),
+      center: Offset(0,0),
       radius: size.width - strokeWidth / 2,
     );
 
@@ -154,8 +160,8 @@ class QuaterRingHeatmapPainter extends CustomPainter {
 
       // 그라데이션 정의
       Gradient gradient = SweepGradient(
-        startAngle: (360-convertedKey) * pi / 180,
-        endAngle: (360-convertedKey +2) * pi / 180,
+        startAngle: (360-(convertedKey*bias)) * pi / 180,
+        endAngle: (360-(convertedKey*bias) +2) * pi / 180,
         colors: counter==1?colorSets[0]:counter==2?colorSets[1]:counter==3?colorSets[2]:colorSets[3],
         stops:[0.0,0.5,1],
       );
@@ -170,7 +176,7 @@ class QuaterRingHeatmapPainter extends CustomPainter {
       // 원형 띠 그리기
       canvas.drawArc(
         rect,
-        (360-convertedKey) * pi / 180, // 시작 각도
+        (360-(convertedKey*bias)) * pi / 180, // 시작 각도
         4* pi / 180, // 전체 원 (360도)
         false,
         paint,
@@ -187,9 +193,17 @@ class QuaterRingHeatmapPainter extends CustomPainter {
 
 class SemiCircleAngleWidget extends StatelessWidget {
 
-  const SemiCircleAngleWidget({super.key,required this.width,required this.height});
+  const SemiCircleAngleWidget({
+    super.key,
+    required this.width,
+    required this.height,
+    this.startAngle = pi,
+    this.angleRange = pi,
+  });
   final double width;
   final double height;
+  final double startAngle;
+  final double angleRange;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -197,13 +211,20 @@ class SemiCircleAngleWidget extends StatelessWidget {
       height:  (height/2).w,
       child: CustomPaint(
         size: Size(width.w, (height/2).w), // 반구의 크기 (너비와 높이)
-        painter: SemiCirclePainter(),
+        painter: SemiCirclePainter(startAngle: startAngle,angleRange: angleRange),
       ),
     );
   }
 }
 
 class SemiCirclePainter extends CustomPainter {
+  SemiCirclePainter({
+    required this.startAngle,
+    required this.angleRange,
+});
+
+  final double startAngle;
+  final double angleRange;
   @override
   void paint(Canvas canvas, Size size) {
     final Paint paint = Paint()
@@ -217,8 +238,8 @@ class SemiCirclePainter extends CustomPainter {
     // 반구 그리기
     canvas.drawArc(
       Rect.fromCircle(center: center, radius: radius-10.w),
-      pi, // 시작 각도 (-90도)
-      pi, // 180도 (반구)
+      startAngle, // 시작 각도 (-90도)
+      angleRange, // 180도 (반구)
       false,
       paint,
     );
@@ -274,7 +295,7 @@ class SemiCirclePainter extends CustomPainter {
 
 
     // 각도 텍스트 표시
-    for (int angle = -90; angle <= 90; angle += 30) {
+    for (int angle = -60; angle <= 60; angle += 30) {
       final double radian = ((270+angle) * pi) / 180; // 각도를 라디안으로 변환
       final Offset textPosition = Offset(
         center.dx + radius * cos(radian),
@@ -284,7 +305,7 @@ class SemiCirclePainter extends CustomPainter {
       // 각도 텍스트 그리기
       final textPainter = TextPainter(
         text: TextSpan(
-          text: '$angle°',
+          text: '${(angle/6).toInt()}°',
           style: TextStyle(fontSize: 10.sp, color: Colors.black),
         ),
         textDirection: TextDirection.ltr,
@@ -310,11 +331,13 @@ class HighLightTxtWidget extends StatelessWidget {
     required this.height,
     required this.angle,
     required this.percent,
+    this.bias =1,
   });
   final double width;
   final double height;
   final double angle;
   final double percent;
+  final double bias;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -324,16 +347,19 @@ class HighLightTxtWidget extends StatelessWidget {
         size: Size(width.w, (height/2).w), // 반구의 크기 (너비와 높이)
         painter: HighLightTxtPainter(
             angle:angle,
-            percent: percent),
+            percent: percent,
+            bias: bias,
+        ),
       ),
     );
   }
 }
 
 class HighLightTxtPainter extends CustomPainter {
-  HighLightTxtPainter({required this.angle,required this.percent});
+  HighLightTxtPainter({required this.angle,required this.percent,required this.bias});
   final double angle;
   final double percent;
+  final double bias;
   @override
   void paint(Canvas canvas, Size size) {
     final Paint paint = Paint()
@@ -344,7 +370,7 @@ class HighLightTxtPainter extends CustomPainter {
     final double radius = size.height; // 반구의 반지름
     final Offset center = Offset(size.width / 2, size.height); // 반구의 중심 (하단 중앙)
     // 각도 텍스트 표시
-      final double radian = ((270+angle) * pi) / 180; // 각도를 라디안으로 변환
+      final double radian = ((270+(angle*bias)) * pi) / 180; // 각도를 라디안으로 변환
       final Offset textPosition = Offset(
         center.dx + radius * cos(radian),
         center.dy + radius * sin(radian),
@@ -382,23 +408,41 @@ class HighLightTxtPainter extends CustomPainter {
 
 class QuaterCircleAngleWidget extends StatelessWidget {
 
-  const QuaterCircleAngleWidget({super.key,required this.width,required this.height});
+  const QuaterCircleAngleWidget({
+    super.key,
+    required this.width,
+    required this.height,
+    this.startAngle = 270*pi/180,
+    this.angleRange = pi/2,
+    this.bias = 1
+  });
   final double width;
   final double height;
+  final double startAngle;
+  final double angleRange;
+  final double bias;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: width.w,
-      height:  (height/2),
+      width: width,
+      height:  (height),
       child: CustomPaint(
-        size: Size(width, (height/2)), // 반구의 크기 (너비와 높이)
-        painter: QuaterCirclePainter(),
+        size: Size(width, (height)), // 반구의 크기 (너비와 높이)
+        painter: QuaterCirclePainter(startAngle: startAngle,angleRange: angleRange,bias: bias),
       ),
     );
   }
 }
 
 class QuaterCirclePainter extends CustomPainter {
+  QuaterCirclePainter({
+    required this.startAngle,
+    required this.angleRange,
+    required this.bias,
+});
+  final double startAngle;
+  final double angleRange;
+  final double bias;
   @override
   void paint(Canvas canvas, Size size) {
     final Paint paint = Paint()
@@ -407,13 +451,13 @@ class QuaterCirclePainter extends CustomPainter {
       ..strokeWidth = 2;
 
     final double radius = size.width; // 반구의 반지름
-    final Offset center = Offset(0, size.height); // 반구의 중심 (하단 중앙)
+    final Offset center = Offset(0, 0); // 반구의 중심 (하단 중앙)
 
     // 반구 그리기
     canvas.drawArc(
       Rect.fromCircle(center: center, radius: radius-10.w),
-      270 * pi / 180, // 시작 각도 (-90도)
-      pi/2, // 180도 (반구)
+      startAngle, // 시작 각도 (-90도)
+      angleRange, // 180도 (반구)
       false,
       paint,
     );
@@ -436,7 +480,7 @@ class QuaterCirclePainter extends CustomPainter {
 
     final double startX = center.dx; // 시작 X 좌표
     final double startY = center.dy-(radius-14.w); // 시작 Y 좌표
-    final double endY = center.dy; // 끝 Y 좌표
+    final double endY = center.dy+(radius-14.w); // 끝 Y 좌표
 
     double currentY = startY;
 
@@ -469,8 +513,8 @@ class QuaterCirclePainter extends CustomPainter {
 
 
     // 각도 텍스트 표시
-    for (int angle =0; angle <= 90; angle += 30) {
-      final double radian = ((270+angle) * pi) / 180; // 각도를 라디안으로 변환
+    for (int angle =-60; angle <= 60; angle += 30) {
+      final double radian = ((angle) * pi) / 180; // 각도를 라디안으로 변환
       final Offset textPosition = Offset(
         center.dx + radius * cos(radian),
         center.dy + radius * sin(radian),
@@ -479,7 +523,7 @@ class QuaterCirclePainter extends CustomPainter {
       // 각도 텍스트 그리기
       final textPainter = TextPainter(
         text: TextSpan(
-          text: '${90 - angle}°',
+          text: '${-(angle/bias).toInt()}°',
           style: TextStyle(fontSize: 10.sp, color: Colors.black),
         ),
         textDirection: TextDirection.ltr,
@@ -506,41 +550,47 @@ class QuaterHighLightTxtWidget extends StatelessWidget {
     required this.height,
     required this.angle,
     required this.percent,
+    this.bias =1,
   });
   final double width;
   final double height;
   final double angle;
   final double percent;
+  final double bias;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: width,
-      height:  (height/2),
+      height: height,
       child: CustomPaint(
-        size: Size(width, (height/2)), // 반구의 크기 (너비와 높이)
+        size: Size(width, (height)), // 반구의 크기 (너비와 높이)
         painter: QuaterHighLightTxtPainter(
             angle:angle,
-            percent: percent),
+            percent: percent,
+            bias: bias
+        ),
       ),
     );
   }
 }
 
 class QuaterHighLightTxtPainter extends CustomPainter {
-  QuaterHighLightTxtPainter({required this.angle,required this.percent});
+  QuaterHighLightTxtPainter({
+    required this.angle,
+    required this.percent,
+    required this.bias,
+  });
   final double angle;
   final double percent;
+  final double bias;
   @override
   void paint(Canvas canvas, Size size) {
-    final Paint paint = Paint()
-      ..color = Colors.black
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 2;
 
-    final double radius = size.height; // 반구의 반지름
-    final Offset center = Offset(0, size.height); // 반구의 중심 (하단 중앙)
+
+    final double radius = size.width; // 반구의 반지름
+    final Offset center = Offset(0, size.height/2); // 반구의 중심 (하단 중앙)
     // 각도 텍스트 표시
-    final double radian = ((360-angle) * pi) / 180; // 각도를 라디안으로 변환
+    final double radian = ((-(angle*bias)) * pi) / 180; // 각도를 라디안으로 변환
     final Offset textPosition = Offset(
       center.dx + radius * cos(radian),
       center.dy + radius * sin(radian),
@@ -555,7 +605,7 @@ class QuaterHighLightTxtPainter extends CustomPainter {
               style: TextStyle(fontSize: 11.sp, color: Color(0xffA6A6A6),fontWeight: FontWeight.w500,  ),
             ),
             TextSpan(
-              text: '${angle.abs()}°',
+              text: '${angle<0?"B":angle>0?"T":""} ${(angle).abs()}°',
               style: TextStyle(fontSize: 11.sp, color: Color(0xff000000),fontWeight: FontWeight.w500  ),
             ),
           ],

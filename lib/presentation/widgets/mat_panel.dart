@@ -136,7 +136,7 @@ class _MatPanelState extends State<MatPanel> {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Sides Distance",
+                  Text("Separation\nDistance",
                     style: TextStyle(
                       fontSize: 14.sp,
                       color: Color(0xff7A7A7A),

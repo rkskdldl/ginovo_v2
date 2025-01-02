@@ -69,14 +69,14 @@ class MyApp extends StatelessWidget {
       //         launchAngleTxt: "R 3.0°",
       //       )
       //   ),
-      //   onGenerateRoute: (routes)=>
-      //       MaterialPageRoute(
-      //           builder: (_)=>HomePage(),
-      //       ),
         onGenerateRoute: (routes)=>
             MaterialPageRoute(
-              builder: (_)=>HistoryPage(),
+                builder: (_)=>HomePage(),
             ),
+      //   onGenerateRoute: (routes)=>
+      //       MaterialPageRoute(
+      //         builder: (_)=>HistoryPage(),
+      //       ),
         builder:(ctx,widget) {
           ScreenUtil.init(ctx, designSize: Size(AppSize.standardWidth, AppSize.standardHeight));
           return widget!;

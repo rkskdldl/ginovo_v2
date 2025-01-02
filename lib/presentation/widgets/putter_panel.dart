@@ -399,6 +399,28 @@ class ArcPainter extends CustomPainter {
       false, // 호 내부 채우기 여부 (false = 채우지 않음)
       paint, // 페인트 스타일
     );
+
+    final double radian = radians+(radians2/2); // 각도를 라디안으로 변환
+    final Offset textPosition = Offset(
+      center.dx + (radius*2) * cos(radian),
+      center.dy + (radius*2) * sin(radian),
+    );
+
+    // 각도 텍스트 그리기
+    final textPainter = TextPainter(
+      text: TextSpan(
+        text: '${angle}°',
+        style: TextStyle(fontSize: 10.sp, color: Colors.black, fontWeight: FontWeight.w500),
+      ),
+      textDirection: TextDirection.ltr,
+    );
+    textPainter.layout();
+
+    final Offset adjustedPosition = textPosition.translate(
+      -textPainter.width / 2,
+      -textPainter.height / 2,
+    ); // 텍스트 위치를 조정
+    textPainter.paint(canvas, adjustedPosition);
   }
 
   @override

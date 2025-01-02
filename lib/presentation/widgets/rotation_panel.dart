@@ -169,7 +169,7 @@ class _RotationSectionState extends State<RotationSection> {
                         child: Container(
                             child: Align(
                                 alignment: widget.spinAngle>0?widget.spinAngle.abs()<=90?Alignment.topRight:Alignment.bottomRight:widget.spinAngle.abs()<=90?Alignment.topLeft:Alignment.bottomLeft,
-                                child: Text("${widget.spinAngle.toStringAsFixed(1)}°",
+                                child: Text("${widget.spinAngle>0?"R":widget.spinAngle<0?"L":""} ${widget.spinAngle.abs().toStringAsFixed(1)}°",
                                   style: TextStyle(
                                     fontSize: 20.sp,
                                     fontWeight: FontWeight.w500,
