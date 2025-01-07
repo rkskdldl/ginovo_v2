@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ginovo_result/presentation/pages/history/history_page.dart';
 import 'package:ginovo_result/presentation/pages/home/home_page.dart';
 import 'package:ginovo_result/presentation/pages/result/long_put_result_page.dart';
+import 'package:ginovo_result/presentation/widgets/bluetooth_example.dart';
 import 'package:ginovo_result/presentation/widgets/web_3d_viewer.dart';
 import 'package:vector_math/vector_math_64.dart' as vec;
 import 'helper/constants.dart';
@@ -10,6 +12,7 @@ import 'helper/constants.dart';
 void main() {
   // 플랫폼 초기화
   WidgetsFlutterBinding.ensureInitialized();
+  FlutterBluePlus.setLogLevel(LogLevel.info,color:true);
   runApp(const MyApp());
 }
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -23,7 +26,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       navigatorKey:navigatorKey,
-      title: 'ginovo result',
+      title: 'ginovo',
       // onGenerateRoute: (routes)=>
       //     MaterialPageRoute(
       //     builder: (_)=>LongPutResultPage(
@@ -69,14 +72,18 @@ class MyApp extends StatelessWidget {
       //         launchAngleTxt: "R 3.0°",
       //       )
       //   ),
-        onGenerateRoute: (routes)=>
-            MaterialPageRoute(
-                builder: (_)=>HomePage(),
-            ),
+      //   onGenerateRoute: (routes)=>
+      //       MaterialPageRoute(
+      //           builder: (_)=>HomePage(),
+      //       ),
       //   onGenerateRoute: (routes)=>
       //       MaterialPageRoute(
       //         builder: (_)=>HistoryPage(),
       //       ),
+        onGenerateRoute: (routes)=>
+            MaterialPageRoute(
+              builder: (_)=>BluetoothExample(),
+            ),
         builder:(ctx,widget) {
           ScreenUtil.init(ctx, designSize: Size(AppSize.standardWidth, AppSize.standardHeight));
           return widget!;
