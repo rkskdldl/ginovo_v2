@@ -1,5 +1,8 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ginovo_result/helper/module/ball_data_manager.dart';
 import 'package:ginovo_result/helper/module/csv_helper.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -18,7 +21,11 @@ class _BluetoothExampleState extends State<BluetoothExample> {
   List<BluetoothCharacteristic> characteristicList = [];
   BluetoothCharacteristic? targetCharacteristic;
 
+  List<BluetoothDevice> bleDevices = [];
+
+
   List<String> receivedMessages = ["wait"]; // 수신된 메시지 리스트
+  String batteryTxt = "";
   Vector? relativeVector;
   @override
   void initState() {
@@ -36,15 +43,23 @@ class _BluetoothExampleState extends State<BluetoothExample> {
         print("장치 발견: ${result.device.advName}, RSSI: ${result.rssi}");
         if (result.device.advName.contains(targetDeviceName)) {
           print("목표 장치 발견: ${result.device.name}");
-          setState(() {
-            targetDevice = result.device;
-          });
-          FlutterBluePlus.stopScan();
-          connectToDevice();
-          break;
+            if(!(bleDevices.map((e)=>e.advName).toList().contains(result.device.advName))) {
+            print("디바이스 추가됨.");
+            setState(() {
+              bleDevices.add(result.device);
+            });
+            }
         }
       }
     });
+  }
+
+  void clickToConnect(BluetoothDevice device){
+    setState(() {
+      targetDevice = device;
+    });
+    FlutterBluePlus.stopScan();
+    connectToDevice();
   }
 
   void connectToDevice() async {
@@ -85,18 +100,37 @@ class _BluetoothExampleState extends State<BluetoothExample> {
     characteristic.onValueReceived.listen((value) {
       // 바이트 배열을 문자열로 변환
       String message = String.fromCharCodes(value);
-      if(!message.contains("ready")) {
-        // print("수신된 메시지: $message");
-
+      if(!message.contains("ready") && !message.contains('{"batt":')) {
+        print("수신된 메시지: $message");
+        //
         List<double> datas = BallDataManager.instance.translateData(message);
         BallDataManager.wList.add(datas[0]);
         BallDataManager.xList.add(datas[1]);
         BallDataManager.yList.add(datas[2]);
-        BallDataManager.zList.add(datas[3]);
+        // BallDataManager.zList.add(datas[3]);
+        BallDataManager.zList.add(0);
         BallDataManager.timestamp.add(DateTime.now());
+        // Quaternion q = Quaternion(datas[1], datas[2], datas[3], datas[0]);
+        Quaternion q = Quaternion(datas[1], datas[2], 0, datas[0]);
+        BallDataManager.quaternionList.add(q);
+
+
+        // if(BallDataManager.quaternionList.isNotEmpty) {
+        //   // 이동 벡터 계산
+        //   List<double> moveVector =
+        //   BallDataManager.instance.quaternionDifferenceToMoveVector(
+        //       BallDataManager.quaternionList.last, q);
+        //
+        //   // print('Direction Move Vector: $moveVector');
+        //   BallDataManager.directionVectors.add(Vector3(moveVector[0], moveVector[1], moveVector[2]));
+        // }
 
         setState(() {
           receivedMessages.add(message);// 수신된 메시지를 리스트에 추가
+        });
+      }else if(message.contains('{"batt":')){
+        setState(() {
+          batteryTxt = message;
         });
       }
     });
@@ -110,7 +144,8 @@ class _BluetoothExampleState extends State<BluetoothExample> {
     print("메시지 전송: $message");
   }
   Future<void> requestStoragePermission() async {
-    if (await Permission.storage.request().isGranted) {
+    await Permission.storage.request();
+    if (await Permission.storage.status.isGranted) {
       print("저장소 권한 허용됨");
     } else {
       print("저장소 권한이 필요합니다.");
@@ -130,8 +165,22 @@ class _BluetoothExampleState extends State<BluetoothExample> {
       ),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
+            Container(
+              width: double.maxFinite,
+              height: 200,
+              child: ListView(
+                shrinkWrap: true,
+                children: [
+                  ...bleDevices.map((e)=>ElevatedButton(onPressed: (){
+                    clickToConnect(e);
+                  }, child: Text(e.advName))).toList(),
+                ],
+              ),
+            ),
+            SizedBox(height: 20),
             Text(
               targetDevice == null
                   ? '스캔 중...'
@@ -156,7 +205,7 @@ class _BluetoothExampleState extends State<BluetoothExample> {
             ElevatedButton(
               onPressed: ()async{
                 final csvHelper = CsvHelper();
-                await csvHelper.saveToCsv(
+                await csvHelper.saveToCsvAngle(
                   BallDataManager.wList,
                   BallDataManager.xList,
                   BallDataManager.yList,
@@ -167,6 +216,18 @@ class _BluetoothExampleState extends State<BluetoothExample> {
               child: Text('csv 저장'),
             ),
             SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: ()async{
+              setState(() {
+                if(targetDevice != null){
+                  sendMessage(characteristicList[1],'{"cmd":"batt"}');
+                }
+              });
+              },
+              child: Text('배터리 잔량 확인'),
+            ),
+            SizedBox(height: 20),
+            Text("${batteryTxt}"),
           ],
         ),
       ),

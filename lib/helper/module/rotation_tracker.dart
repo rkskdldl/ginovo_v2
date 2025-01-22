@@ -62,6 +62,32 @@ extension Euler on Quaternion{
 
     return Vector3(roll, pitch, yaw);
   }
+  /// 상대 쿼터니언에서 회전축 및 회전 각도 계산
+  Map<String, dynamic> toRotationAxisAndAngle() {
+    double theta = 2 * acos(w); // 회전 각도
+    double axisNorm = sqrt(x * x + y * y + z * z);
+
+    // 회전 축 계산 (정규화)
+    List<double> axis = axisNorm > 1e-6
+        ? [x / axisNorm, y / axisNorm, z / axisNorm]
+        : [0.0, 0.0, 0.0];
+
+    return {'angle': theta, 'axis': axis};
+  }
+  /// 쿼터니언의 역수 계산
+  Quaternion customInverse() {
+    return Quaternion(w, -x, -y, -z);
+  }
+
+  /// 쿼터니언 곱셈
+  Quaternion multiply(Quaternion other) {
+    return Quaternion(
+      w * other.w - x * other.x - y * other.y - z * other.z,
+      w * other.x + x * other.w + y * other.z - z * other.y,
+      w * other.y - x * other.z + y * other.w + z * other.x,
+      w * other.z + x * other.y - y * other.x + z * other.w,
+    );
+  }
 }
 
 // 각도를 쿼터니언으로 변환하는 함수

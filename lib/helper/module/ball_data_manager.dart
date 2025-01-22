@@ -21,7 +21,9 @@ class BallDataManager with BallDataManagerInterface{
   static List<double> yList= [];
   static List<double> zList = [];
   static List<DateTime> timestamp = [];
-
+  static List<Quaternion> quaternionList = [];
+  static List<Quaternion> quaternionRelativeList = [];
+  static List<Vector3> directionVectors = [];
 
   static RotationTracker rotationTracker = RotationTracker();
   @override
@@ -76,8 +78,20 @@ Vector3 getRelativeDirection(Quaternion initialQuaternion, Quaternion newQuatern
 
       print("회전 여부:  ${isTurned}");
     }
+  }
 
+  /// 두 쿼터니언의 차이로 이동 벡터 계산
+  List<double> quaternionDifferenceToMoveVector(Quaternion qPrev, Quaternion qCurrent) {
+    // qRelative = qPrev.inverse() * qCurrent
+    Quaternion qRelative = qPrev.customInverse().multiply(qCurrent);
 
+    // 상대 쿼터니언으로부터 회전축과 각도 계산
+    Map<String, dynamic> rotationData = qRelative.toRotationAxisAndAngle();
+    double theta = rotationData['angle'];
+    List<double> axis = rotationData['axis'];
+    print("theta: "+theta.toStringAsFixed(1) +" axis: "+rotationData['axis'].toString());
+    // 이동 벡터 계산: 축 * 각도
+    return [axis[0] * theta, axis[1] * theta, axis[2] * theta];
   }
 
 }
