@@ -5,16 +5,39 @@ import 'package:path_provider/path_provider.dart';
 import 'package:vector_math/vector_math_64.dart';
 
 class CsvHelper {
+  Future<String> _generateFilePath(String prefix, [String? deviceName]) async {
+    final directory = await getExternalStorageDirectory();
+    if (directory == null) {
+      throw Exception("외부 저장소 디렉터리를 찾을 수 없습니다.");
+    }
+
+    List<String> folders = directory.path.split("/");
+    String path = "";
+    for (int i = 1; i < folders.length; i++) {
+      if (folders[i] != "Android") {
+        path += "/${folders[i]}";
+      } else {
+        break;
+      }
+    }
+    path += "/Documents";
+
+    final timestamp = DateTime.now().millisecondsSinceEpoch;
+    final filename = deviceName != null
+        ? "${prefix}_${deviceName}_$timestamp.csv"
+        : "${prefix}_$timestamp.csv";
+
+    return "$path/$filename";
+  }
+
   Future<void> saveToCsv(List<double> w, List<double> x, List<double> y,
       List<double> z, List<DateTime> timestamp) async {
-    // 데이터 검증
     if (w.length != x.length || w.length != y.length || w.length != z.length) {
       throw Exception("pitch, yaw, roll 데이터의 길이가 같아야 합니다.");
     }
 
-    // CSV 데이터 생성
     List<List<dynamic>> rows = [
-      ["w", "x", "y", "z", "timestamp"] // 헤더 추가
+      ["w", "x", "y", "z", "timestamp"]
     ];
 
     for (int i = 0; i < w.length; i++) {
@@ -22,28 +45,19 @@ class CsvHelper {
     }
 
     String csvData = const ListToCsvConverter().convert(rows);
-
-    // 파일 저장
-    final directory = await getExternalStorageDirectory();
-    final path =
-        "${directory?.path}/data_${DateTime.now().millisecondsSinceEpoch}.csv";
-    final file = File(path);
-
-    await file.writeAsString(csvData);
-
+    final path = await _generateFilePath("data");
+    await File(path).writeAsString(csvData);
     print("CSV 파일이 저장되었습니다: $path");
   }
 
   Future<void> saveToCsvAngle(List<double> w, List<double> x, List<double> y,
       List<double> z, List<DateTime> timestamp) async {
-    // 데이터 검증
     if (w.length != x.length || w.length != y.length || w.length != z.length) {
       throw Exception("pitch, yaw, roll 데이터의 길이가 같아야 합니다.");
     }
 
-    // CSV 데이터 생성
     List<List<dynamic>> rows = [
-      ["x", "y", "z", "timestamp"] // 헤더 추가
+      ["x", "y", "z", "timestamp"]
     ];
 
     for (int i = 0; i < w.length; i++) {
@@ -51,28 +65,15 @@ class CsvHelper {
     }
 
     String csvData = const ListToCsvConverter().convert(rows);
-
-    // 파일 저장
-    final directory = await getExternalStorageDirectory();
-    final path =
-        "${directory?.path}/data_${DateTime.now().millisecondsSinceEpoch}.csv";
-    final file = File(path);
-
-    await file.writeAsString(csvData);
-
+    final path = await _generateFilePath("angle");
+    await File(path).writeAsString(csvData);
     print("CSV 파일이 저장되었습니다: $path");
   }
 
   Future<void> saveVectorsToCsv(
       List<Vector3> vectors, List<DateTime> timestamp) async {
-    // 데이터 검증
-    // if (w.length != x.length || w.length != y.length || w.length != z.length) {
-    //   throw Exception("pitch, yaw, roll 데이터의 길이가 같아야 합니다.");
-    // }
-
-    // CSV 데이터 생성
     List<List<dynamic>> rows = [
-      ["x", "y", "z", "timestamp"] // 헤더 추가
+      ["x", "y", "z", "timestamp"]
     ];
 
     for (int i = 0; i < vectors.length; i++) {
@@ -85,28 +86,20 @@ class CsvHelper {
     }
 
     String csvData = const ListToCsvConverter().convert(rows);
-
-    // 파일 저장
-    final directory = await getExternalStorageDirectory();
-    final path =
-        "${directory?.path}/vector_${DateTime.now().millisecondsSinceEpoch}.csv";
-    final file = File(path);
-
-    await file.writeAsString(csvData);
+    final path = await _generateFilePath("vector");
+    await File(path).writeAsString(csvData);
     Fluttertoast.showToast(msg: "파일이 저장되었습니다.");
     print("CSV 파일이 저장되었습니다: $path");
   }
 
   Future<void> saveBatteryStatus(
       List<String> value, List<DateTime> timestamp, String deviceName) async {
-    // 데이터 검증
     if (value.length != timestamp.length) {
       throw Exception("데이터의 길이가 같아야 합니다.");
     }
 
-    // CSV 데이터 생성
     List<List<dynamic>> rows = [
-      ["timestamp(KST)", "value(%)"] // 헤더 추가
+      ["timestamp(KST)", "value(%)"]
     ];
 
     for (int i = 0; i < value.length; i++) {
@@ -114,27 +107,8 @@ class CsvHelper {
     }
 
     String csvData = const ListToCsvConverter().convert(rows);
-
-    // 파일 저장
-    final directory = await getExternalStorageDirectory();
-    String path = "";
-    List<String> folders = directory!.path.split("/");
-    for (int i = 1; i < folders.length; i++) {
-      String folder = folders[i];
-      if (folder != "Android") {
-        path += "/$folder";
-      } else {
-        break;
-      }
-    }
-    path += "/Documents";
-
-    final newpath =
-        "${path}/BatteryStatusData_${deviceName}_${DateTime.now().millisecondsSinceEpoch}.csv";
-    final file = File(newpath);
-
-    await file.writeAsString(csvData);
-
+    final path = await _generateFilePath("BatteryStatusData", deviceName);
+    await File(path).writeAsString(csvData);
     print("CSV 파일이 저장되었습니다: $path");
   }
 }
