@@ -50,7 +50,7 @@ class CsvHelper {
     print("CSV 파일이 저장되었습니다: $path");
   }
 
-  Future<void> saveToCsvAngle(List<double> w, List<double> x, List<double> y,
+  Future<void> saveToCsvAccRaw(List<double> w, List<double> x, List<double> y,
       List<double> z, List<DateTime> timestamp) async {
     if (w.length != x.length || w.length != y.length || w.length != z.length) {
       throw Exception("pitch, yaw, roll 데이터의 길이가 같아야 합니다.");
@@ -65,7 +65,7 @@ class CsvHelper {
     }
 
     String csvData = const ListToCsvConverter().convert(rows);
-    final path = await _generateFilePath("angle");
+    final path = await _generateFilePath("accRawData");
     await File(path).writeAsString(csvData);
     print("CSV 파일이 저장되었습니다: $path");
   }
