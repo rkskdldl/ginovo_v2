@@ -272,7 +272,7 @@ class _BluetoothExampleState extends State<BluetoothExample> {
                 ElevatedButton(
                   onPressed: isSendMessageButtonDisabled
                       ? null
-                      : () => sendMessageButton('{"cmd":"raw"}'),
+                      : () => sendMessageButton('{"cmd":"accRaw"}'),
                   child: Text('메시지 전송'),
                 ),
                 ElevatedButton(
